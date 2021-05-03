@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>University CTF</title>
+    <meta name="description" content="Jafor&#39;s Website.">
+    <meta name="author" content='Jafor'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Jafor</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/writeups">Writeups</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">Uni</span>versity course's web CTF </h1><br>
+<hr>
+<h2 id=LV1> <span style="color:#da1953">Ind</span>ex </h2>
+<ul>
+<li><a href="#INTRO">Introduction</a></li>
+<li><a href="#LV1">Level 1</a></li>
+<li><a href="#LV2">Level 2</a></li>
+<li><a href="#LV3">Level 3</a></li>
+<li><a href="#LV4">Level 4</a></li>
+<li><a href="#LV5">Level 5</a></li>
+<li><a href="#LV6">Level 6</a></li>
+<li><a href="#LV7">Level 7</a></li>
+<li><a href="#LV8">Level 8</a></li>
+<li><a href="#LV9">Level 9</a></li>
+<li><a href="#LV10">Level 10</a></li>
+<li><a href="#LV11">Level 11</a></li>
+<li><a href="#LV12">Level 12</a></li>
+<li><a href="#LV13">Level 13</a></li>
+<li><a href="#LV14">Level 14</a></li>
+<li><a href="#LV15">Level 15</a></li>
+</ul>
+<hr>
+<h2 id=LV1> <span style="color:#da1953">Int</span>roduction </h2>
+<hr>
+<h2 id=LV1> <span style="color:#da1953">Lev</span>el 1 </h2>
+<p>The URL of the first level was given as the starting point:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55001/eishohwohpahxooy/</code></p>
+<p>As stated during the Web Security Challenges lectures, the first thing to do when trying to hack a web page is to actually use the web page as it is suppose to be used. So, in other words, to simply do what the web page asks you to do.</p>
+<p>Therefore, we try to log in inserting random username and password, as requested from the web page itself.</p>
+<p><img src="/writeups/unictf/image18.png" alt=""></p>
+<p>As expected we receive an error:</p>
+<p><img src="/writeups/unictf/image28.png" alt=""></p>
+<p>Then, let&rsquo;s try to dig furthermore inspecting the web page&rsquo;s source code.</p>
+<p><img src="/writeups/unictf/image63.png" alt=""></p>
+<p>As We can see in the form above that on clicking <em>Submit</em> we actually call a function named <em>verify</em>.</p>
+<p>So, we start looking for a function called <em>verify</em> in the Console section (right click -&gt; inspect element).</p>
+<p><img src="/writeups/unictf/image43.png" alt=""></p>
+<p>As we can see from the picture above, we can find the function <em>verify</em>. Now let’s jump into the definition of the function, to check in detail what the function is supposed to do.</p>
+<p><img src="/writeups/unictf/image64.png" alt=""></p>
+<p>We can see in the <code>if</code> condition highlighted in red, the password and the username needed in order the access the web page.</p>
+<p><img src="/writeups/unictf/image86.png" alt=""></p>
+<hr>
+<h2 id=LV2> <span style="color:#da1953">Lev</span>el 2 </h2>
+<p>Once solved the Level 1, the URL of the second level is found:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55043/zeitaeveishiidef</code></p>
+<p>This is how the Level 2 look like:</p>
+<p><img src="/writeups/unictf/image67.png" alt=""></p>
+<p>In this level there is only the possibility to insert a password, there is no username. So, let&rsquo;s try to insert a random password.</p>
+<p><img src="/writeups/unictf/image72.png" alt=""></p>
+<p>Well, wrong password! As done in the previous level, we try to look further by analyzing the source code.</p>
+<p><img src="/writeups/unictf/image70.png" alt=""></p>
+<p>Reading the first lines we can clearly see that there is a function implementation, the function seems to encrypt the text inserted in the password field, with MD5 function. The first idea is to decrypt what seems to be a ciphertext in the <code>if</code> condition.</p>
+<p>After using numerous MD5 online decrypted without success, we decide to keep on reading the source code. While having a closer look at it, we noticed two images references in the inspector section: one was a reference to the picture in the home page &ldquo;kitten.jpg&rdquo; and the other one was a picture with a hidden parameter &ldquo;srct.png&rdquo;.</p>
+<p>Putting the cursor on top of the reference <em>scrt.png</em> a window pops up with a text.</p>
+<p><img src="/writeups/unictf/image77.png" alt=""></p>
+<p>The text on the picture was the right password to insert in order to solve the level.</p>
+<hr>
+<h2 id=LV3> <span style="color:#da1953">Lev</span>el 3 </h2>
+<p>As usual, in the previous level we found the link to access the next one:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55208/bahjeighahveerae/cgi-bin/index.php</code></p>
+<p>As before, as a first step, we try to follow the natural instructions of the web page itself, this time trying to insert username and password. We decided to try with some random and basic combination of username and password (e.g. <em>admin:admin</em>).</p>
+<p>As we expected, the received the following error page:</p>
+<p><img src="/writeups/unictf/image73.png" alt=""></p>
+<p>So, let us dive in the source code once again.</p>
+<p><img src="/writeups/unictf/image75.png" alt=""></p>
+<p>In the source code, we found a hidden parameter with a <em>False</em> value so we can proceed by changing the value from False to True, and submit the form.</p>
+<p><img src="/writeups/unictf/image78.png" alt=""></p>
+<p>After applying the above-mentioned changes, we finally obtaine the page with the URL of the next level.</p>
+<p><img src="/writeups/unictf/image80.png" alt=""></p>
+<hr>
+<h2 id=LV4> <span style="color:#da1953">Lev</span>el 4 </h2>
+<p>This is the URL for the Level 4:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55192/ogheucaiheikohhi</code></p>
+<p><img src="/writeups/unictf/image82.png" alt=""></p>
+<p>This level consist in verifying our browser in order to have access.</p>
+<p><img src="/writeups/unictf/image84.png" alt=""></p>
+<p>Only connections from <em>Kevin Browser Rocks</em> are accepted.</p>
+<p>The thing we had to do is to pretend to be using the browser <em>Kevin Browser Rocks</em> by changing the headers in our browser. In order to do that we can use an extension (<strong>Simple Modify Headers</strong>, on Firefox) that modifies the header, and we set up to do it during the requests.</p>
+<p><img src="/writeups/unictf/image87.png" alt=""></p>
+<p>As we can see we modify our browser <code>user-agent</code> to <em>Kevin Browser Rocks</em>.</p>
+<p><img src="/writeups/unictf/image89.png" alt=""></p>
+<p>Nice! Now the page accepts only connections from Russian (.ru) websites. We have our extension and we can also use it to simulate Russian connection by changing our browser referrer.</p>
+<p><img src="/writeups/unictf/image89.png" alt=""></p>
+<p>By applying this new change, we can finally get the URL to access the new level.</p>
+<p><img src="/writeups/unictf/image90.png" alt=""></p>
+<hr>
+<h2 id=LV5> <span style="color:#da1953">Lev</span>el 5 </h2>
+<p>This is the URL obtained to access the fifth level:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55051/iengohquoochieza/</code></p>
+<p><img src="/writeups/unictf/image47.png" alt=""></p>
+<p>The first thing we do is to analyze the source code.</p>
+<p><img src="/writeups/unictf/image49.png" alt=""></p>
+<p><em>“Never show secret.txt to the users”</em>, this caught our attention so we search for the file called: <em>secret.txt</em>, in the current web directory. As we know the URL is nothing else than a path to file in a webserver, so we added <em>secret.txt</em> to the urn to the URL in order to find it.</p>
+<p><img src="/writeups/unictf/image51.png" alt=""></p>
+<p>At this point we need to find the secret at <em>cgi-bin/getsecret.js</em> and refer ourselves as <em>di.uniroma1.it/supersecurepage</em>, which can be done with the Firefox extension as done in the previous levels.</p>
+<p><img src="/writeups/unictf/image53.png" alt=""></p>
+<p>After having done this, we were able to find the URL to the next level.</p>
+<p><img src="/writeups/unictf/image55.png" alt=""></p>
+<hr>
+<h2 id=LV6> <span style="color:#da1953">Lev</span>el 6 </h2>
+<p>The URL for the level 6 obtained by solving the level 5:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55005/oaxiweitheerohra</code></p>
+<p><img src="/writeups/unictf/image57.png" alt=""></p>
+<p>Here we have applied the usual method of trying one of the most common combination username and password (admin:admin).</p>
+<p><img src="/writeups/unictf/image59.png" alt=""></p>
+<p>Digging in the source code and reading it did not reveal anything. So, we turn our attention to the URL, and we find a reference to a php script with the field <em>uid</em> exposed <em>userinfo.php?uid=0</em>.</p>
+<p><img src="/writeups/unictf/image60.png" alt=""></p>
+<p>The field is set to <em>0</em> which is our current user’s ID, so we try to change it with 1 and we were sent to another we page, Angelo&rsquo;s web page. 
+Then we started to change the value of uid until we found the user with the secret at <em>uid=6</em>.</p>
+<p><img src="/writeups/unictf/image61.png" alt=""></p>
+<hr>
+<h2 id=LV7> <span style="color:#da1953">Lev</span>el 7 </h2>
+<p>The URL found by solving level 6:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55215/shieduekecometha/</code></p>
+<p><img src="/writeups/unictf/image62.png" alt=""></p>
+<p>As stated in the picture in order to log in we need an e-mail and the username.</p>
+<p><img src="/writeups/unictf/image24.png" alt=""></p>
+<p>So, we try a fake and random email and a random string as password. At that point, we notice that the site check if the username is really an e-mail just by checking if the username string contained the character <em>@</em>.</p>
+<p><img src="/writeups/unictf/image26.PNG" alt=""></p>
+<p>We can try to insert any kind of random email for instance <em>admin@admin</em> or even <em>teacher@something</em> but we always received the same kind of message.After having tried some standard types of email, we thought that we could try by inserting a real teacher’s email address.</p>
+<p>Our first attempt was to try with course main teacher&rsquo;s email but it was not the right solution. Then we tried again with our laboratorys teacher&rsquo;s  email and finally that one was the key solution for the next level because we were able to log in as a teacher and consequently obtain the link for the next level.</p>
+<p><img src="/writeups/unictf/image29.png" alt=""></p>
+<p><img src="/writeups/unictf/image31.png" alt=""></p>
+<hr>
+<h2 id=LV8> <span style="color:#da1953">Lev</span>el 8 </h2>
+<p>Let’s start with the URL obtained from the previous levels:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55493/zangiepaegaizeex/cgi-bin/index.php</code></p>
+<p><img src="/writeups/unictf/image33.png" alt=""></p>
+<p>Our first attempt is as usual the standard combination of <em>admin:admin</em> as username and password.</p>
+<p><img src="/writeups/unictf/image35.png" alt=""></p>
+<p>And we notice a code in the URL which should be the ID of the current user.</p>
+<p><img src="/writeups/unictf/image37.png" alt=""></p>
+<p>We try to figure it out why the current user (admin) has that precise value, and we also notice that the string <em>admin</em> and the string <em>nqzva</em> had the same length, so we started to match the characters from the first string with the ones from the other string hence <em>a=n</em>, <em>d=q</em>.</p>
+<p>We immediately notice that the distance between the characters was 13, so we try to ROT13 the string <em>admin</em> and the result string was <em>nqzva</em>.</p>
+<p>After many random tries, our attention was captured by the sentence <em>“Page created by MessyAdmin”</em> present in the first page of the level.</p>
+<p>So, we decide to ROT13 the string <em>messyadmin</em> which result in <em>zrfflnqzva</em> which has been copied and pasted to the URL instead of <em>nqzva</em> and we ended up to the MessyAdmin’s page where we found the link to the next level.</p>
+<p><img src="/writeups/unictf/image38.png" alt=""></p>
+<p><img src="/writeups/unictf/image39.png" alt=""></p>
+<hr>
+<h2 id=LV9> <span style="color:#da1953">Lev</span>el 9 </h2>
+<p>URL obtained from the 8th level:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55413/eereezeighohfeim</code></p>
+<p><img src="/writeups/unictf/image40.png" alt=""></p>
+<p>The first thing we do was to try the <em>admin@admin:admin</em> username and password combination but without success. Then we investiga the source code looking for some information and we find a comment that said <em>“Never show the sessions.txt file”</em>.</p>
+<p><img src="/writeups/unictf/image2.png" alt=""></p>
+<p>As usual we proceede to change the URL trying to open the <em>sessions.txt</em> file.</p>
+<p><img src="/writeups/unictf/image4.png" alt=""></p>
+<p>After having seen the information in this file, we immediately understand what we have to do because we already know about attack where if you can steal a user session you can log in as that user.</p>
+<p>While this session is saved in the cookie, we proceeded to open the cookie and change the value. To obtain the cookie we had to log in as guest user.</p>
+<p><img src="/writeups/unictf/image6.png" alt=""></p>
+<p>Once in the page, we check if we received the cookie.</p>
+<p><img src="/writeups/unictf/image8.png" alt=""></p>
+<p>We notice that the value of this cookie is different from the value found in the <em>sessions.txt</em> file.</p>
+<p><img src="/writeups/unictf/image10.png" alt=""></p>
+<p>So, we proceede to change it, and our new cookie was:</p>
+<p><img src="/writeups/unictf/image12.png" alt=""></p>
+<p>After reloading the page, we end up is the administrator’s page logged as him, where we can find the link for the next level.</p>
+<p><img src="/writeups/unictf/image14.png" alt=""></p>
+<h2 id=LV10> <span style="color:#da1953">Lev</span>el 10 </h2>
+<p>The link obtained from level 9:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55255/leighaghuuzasaex/</code></p>
+<p><img src="/writeups/unictf/image15.png" alt=""></p>
+<p>As usual we tried the same combination (admin:admin) without any success.</p>
+<p>Then we try many random combinations of usernames and password: for instance, we used some teacher’s usernames just in case we could get it correct, but they failed every time.</p>
+<p>The last attempt is to proceed to analyse the source code of the web page where we find the following script:</p>
+<p><img src="/writeups/unictf/image16.png" alt=""></p>
+<p>Inside the script there is a variable called <em>password_hashes</em> and seems to contain the correspondent encrypted password for each user.</p>
+<p><img src="/writeups/unictf/image17.png" alt=""></p>
+<p>The first thing that came into our mind was MD5, so we proceeded to decrypt the hash with an online tool <em>haskiller.co.uk</em> (this site does not exit any more). It resulted to be a very good website where it is possible to encrypt and decrypt by using various algorithms.</p>
+<p>In addition, you can also download their wordlist in case you need to proceed with an offline hash cracking.</p>
+<p><img src="/writeups/unictf/image66.png" alt=""></p>
+<p>Obviously we take the hash of the user <em>admin</em> and try to log in with the new credential <em>admin:qwertyuiop</em> and we succeeded to proceed to the next level.</p>
+<p><img src="/writeups/unictf/image68.png" alt=""></p>
+<p>But it does not end here because after decrypting the hash we notice that the function <em>checkPassword</em> does not decrypt the user input in order to access the admin page.</p>
+<p>So, we tried to reverse the function in order to understand its logic.</p>
+<p><img src="/writeups/unictf/image69.png" alt=""></p>
+<p>The function follows these steps:</p>
+<ol>
+<li>Retrieve the values from the form and hash the given password.</li>
+<li>It checks if the given user as input in the login form is in the dictionary “password_hashes”, if not it gives error.</li>
+<li>If the user exists, it checks the computed hash with the stored hash, if they don’t match it gives error.</li>
+<li>If also the hash matches, it generates the link for the next level by hashing again the input hash and taking the initial 8 characters so.</li>
+</ol>
+<p>Just in case we are lucky to decrypt the hash we did the script process in order to solve the level.</p>
+<p><img src="/writeups/unictf/image71.png" alt=""></p>
+<p>In fact, we can access the right page by adding <em>62aa4dcf.html</em> as the script is doing.</p>
+<p><img src="/writeups/unictf/image74.png" alt=""></p>
+<hr>
+<h2 id=LV11> <span style="color:#da1953">Lev</span>el 11 </h2>
+<p>We started from the following URL:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55025/eepugeighovoorou/</code></p>
+<p><img src="/writeups/unictf/image76.png" alt=""></p>
+<p>The first attempt is to use few commonly used numbers such as <em>0000</em>, <em>12345</em>, <em>1337</em> but without any success.</p>
+<p>As usual, we proceede to analyze the source code where we find a script like the previous levels and our attention was caught by a function called <em>checkPassword</em>.</p>
+<p><img src="/writeups/unictf/image79.png" alt=""></p>
+<p>As we can see the <code>if</code> statement checks if the number is between 1 and 1000000 excluded, if it is <em>NaN</em> (empy form) and if it has at least six digits.</p>
+<p>So, we supposed that a valid code could have been a number between 1 and 999999. Then the function hashes the code with MD5 with the salt <em>localsalt</em> and checks if the result hashing is equal to <em>4d1ea4c067daa4dec768540bbcfe80b2</em>.</p>
+<p>The first idea was to decrypt the hash to retrieve the right value but due to the lack of online tool we proceeded to hash with salt all the passwords from 1 to 99999 and check which one matched the string: <em>“4d1ea4c067daa4dec768540bbcfe80b2”</em>.</p>
+<p>In order to do it we write a python script.</p>
+<p><img src="/writeups/unictf/image81.png" alt=""></p>
+<p>And this is the result produced by the script.</p>
+<p><img src="/writeups/unictf/image83.png" alt=""></p>
+<p>As expected, the code works fine.</p>
+<p><img src="/writeups/unictf/image85.png" alt=""></p>
+<hr>
+<h2 id=LV12> <span style="color:#da1953">Lev</span>el 12 </h2>
+<p>The URL obtained from level 11:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55528/ithochexephizoof</code></p>
+<p><img src="/writeups/unictf/image65.png" alt=""></p>
+<p>In this case, there is no form or text box where to write so we proceede by analyzing the code where, as usual, we find a script and we focused on a portion of the code.</p>
+<p><img src="/writeups/unictf/image44.png" alt=""></p>
+<p>Here, we can see that the script creates a new link concatenating two string to complete the URL.</p>
+<p>These strings are: <em>“cgi-bin/users.php”</em> and <em>“?filter=”</em>, after which a value is concatenated, but we don&rsquo;t know which kind of value could follow the string.</p>
+<p>We decide to copy and paste the strings to the URL to complete it ourselves and appending something in order to execute an XSS since it was a JavaScript.</p>
+<p><img src="/writeups/unictf/image45.png" alt=""></p>
+<p>We try several times but for some reason no one of our attempts work (in addition, we are not really good in JavaScript!).</p>
+<p>Then we noticed what the home page was prompting: <em>daemon</em>, <em>root</em>, <em>mysql</em>, things that reminded us of Linux users so we tried to execute a simple Linux command instead of a JavaScript one.</p>
+<p><img src="/writeups/unictf/image46.png" alt=""></p>
+<p>Once find the files in the directory we can try to open <em>secretusers.txt</em> with the command <code>cat</code>.</p>
+<p>And the file contain the link for the next level.</p>
+<p><img src="/writeups/unictf/image48.png" alt=""></p>
+<p>&ndash;</p>
+<h2 id=LV13> <span style="color:#da1953">Lev</span>el 13 </h2>
+<p>The starting point was the URL obtained from the previous level:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55277/neifeesuopheeghu/</code></p>
+<p><img src="/writeups/unictf/image50.png" alt=""></p>
+<p>The first thing we do is to write something in the text box to see what happens and we try many different kinds of values to check how well it validates the input.</p>
+<p><img src="/writeups/unictf/image52.png" alt=""></p>
+<p>As usual we proceede to analyze the code in search of information or scripts to reverse. In fact we find a script, and in particular we focus out attention on the function “getenv”.</p>
+<p>In addition, we see the sanitize function on the user input which removes the illegal character from the input: that was the reason why it does not generate any kind of error.</p>
+<p><img src="/writeups/unictf/image54.png" alt=""></p>
+<p>Also, here we can see the making of the URL like the previous levels so we attempted the same method as in the level 12 without any success.</p>
+<p><img src="/writeups/unictf/image56.png" alt=""></p>
+<p>The response was -<em>“no variable found”</em> and also when we put an input it prints a <em>TESTENV</em> which recall something similar to the bash environment variable so we decide to do few researches to see if there were any vulnerability with the bash in the past or something similar.</p>
+<p><img src="/writeups/unictf/image58.png" alt=""></p>
+<p>The first thing we find is something called “Shellshock”. The document explain what and how to exploit this vulnerability providing the string to use in order to execute remote shell commands.</p>
+<p>The string is: <code>() { :;}; echo “NS:” $(&lt;/etc/passwd)</code>.</p>
+<p>Digging more in the topic we can find a <a href="https://owasp.org/www-pdf-archive/Shellshock_-_Tudor_Enache.pdf">pdf</a> where the shellshock vulnerability was explained alongside with its syntax.</p>
+<p><img src="/writeups/unictf/image41.png" alt=""></p>
+<p>So again, we try to remake the right link appending <em>cgi-bin/env.php?filter=</em> and try to copy and paste the string suggested but for some reason no one of the two strings is working.</p>
+<p><img src="/writeups/unictf/image42.png" alt=""></p>
+<p>During the laboratory lesson we have been suggested by the teacher to use <strong>Burp</strong> so we try again with burp.</p>
+<p>First thing we do is to copy and paste the payload found on the internet on the link like we did with the browser but without any success.</p>
+<p><img src="/writeups/unictf/image22.jpg" alt=""></p>
+<p>After few researches and random tries we figure out that we have to encode few characters and substitute the spaces with <em>+</em>.</p>
+<p>So we encoded the “:” and “;” with “%3a” and “%3b” following the guide in this link, so our resulting payload was <code>()+{+%3a%3b}+/bin/ls</code> but still did not work for some reason.</p>
+<p><img src="/writeups/unictf/image23.jpg" alt=""></p>
+<p>Then we remembered, after a lot of struggle, a file called <em>“user.php”</em> on the level 12 which has a particular comment.</p>
+<p><img src="/writeups/unictf/image25.jpg" alt=""></p>
+<p>The referrer was disabled for that level and maybe it is enabled in this one, so we tried to add the referrer with our level URL.</p>
+<p><img src="/writeups/unictf/image27.jpg" alt=""></p>
+<p>Which works perfectly, and we succeeded to list the directory content.</p>
+<p>The next step is to read the <em>secret4uou0.txt</em> with the command <code>cat</code> so we send the payload with a different command <code>/bin/cat+secret4uou0.txt</code> where we find the link for the next level.</p>
+<p><img src="/writeups/unictf/image30.jpg" alt=""></p>
+<hr>
+<h2 id=LV14> <span style="color:#da1953">Lev</span>el 14 </h2>
+<p>The starting point was the URL obtained from the previous level:</p>
+<p><code>http://eth-lab.di.uniroma1.it:55424/aetiasaeghongohx</code></p>
+<p>At the beginning of this level we have no idea what to do, we try to register a user, we try to log in as <em>admin:admin</em> but nothing, then we remember our Lab class on XSS attack and we try to do it but without success.</p>
+<p>Only after few days later we had a class on SQL Injection then we tried to do so.</p>
+<p>First of all, we had to find where the vulnerability was, it could be in a form, since it is very common to find them there, or we could perform an injection from the URL.</p>
+<p>We checked all the forms by writing inside the “ ’ ” character to see if we would get any query error, and we found it on the page “new user” on the field “username”.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Jafor</small></a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Run and Debug DLL</title>
+    <meta name="description" content="Jafor&#39;s Website.">
+    <meta name="author" content='Jafor'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Jafor</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/writeups">Writeups</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">Run</span> and Debug DLL </h1>
+<p>Jul 27, 2020</p>
+<hr>
+<h2> <span style="color:#da1953">Ind</span>ex </h2>
+<ul>
+<li><a href="#INTRO">Introduction</a></li>
+<li><a href="#RUNDLL">Run DLL</a></li>
+<li><a href="#DBGDLL">Debug DLL</a></li>
+</ul>
+<hr>
+<h2 id=INTRO> <span style="color:#da1953">Int</span>roduction </h2>
+<p>A DLL is a library that contains functions/code and datato to be used by more than one program at the same time, unlike normal programs it does not contain a <strong>main</strong> function therefore it does not have an entry point for execution.</p>
+<p>But there are various reasons why to execute a DLL for example to solve a CTF, to analyze a DLL that a malware has dropped or to understand how it works.</p>
+<h2 id=RUNDLL> <span style="color:#da1953">Run</span> DLL </h2>
+<p>To run any DLL I have to use <em>rundll</em> program in my case im using <code>rundll32</code> because the DLL is x86.
+So in order to run a DLL I have to execute the command <code>rundll32 hellow-world-x86.dll,#2</code> where <strong>#2</strong> is the number of exports.</p>
+<p>After the execution a popup with the message <em>Hello world</em> will appear.</p>
+<p><img src="/rundebugdll/1.jpg" alt=""></p>
+<p>If a different number of exports is given the DLL will continue executing with an error message as long as I dont press <em>&ldquo;ok&rdquo;</em> on the error message, but in case the number of exports is unknows I always put a high number to execute it.</p>
+<p><img src="/rundebugdll/2.bmp" alt=""></p>
+<h2 id=DBGDLL> <span style="color:#da1953">Deb</span>ug DLL </h2>
+<p>In order to dynamically debug the DLL im going to use <strong>IDA Free</strong> and as I see trying to run it as usual doesent work at all.</p>
+<p><img src="/rundebugdll/3.JPG" alt=""></p>
+<p>Now to run and debug the DLL properly I open two IDA windows, one with the DLL in static analysis and another in dynamic analysis running the DLL via <code>rundll32</code> program in IDA.</p>
+<p>Now I open another IDA window and open <code>rundll32</code> which in the path <code>C:\Windows\SysWOW64\rundll32.exe</code> to dinamically analyse my DLL and leave the other IDA window instatic analisys in background (for now).</p>
+<p><img src="/rundebugdll/4.JPG" alt=""></p>
+<p>If this error message appears press <em>&ldquo;Yes&rdquo;</em>, it means I have to choose a different path to save the IDA databases about the future analysis and I usually choose my Desktop.</p>
+<p><img src="/rundebugdll/5.JPG" alt=""></p>
+<p>At this point I have to tell the <code>rundll32</code> loaded in IDA to execute my <code>hello-world-x86.dll</code>.</p>
+<p><img src="/rundebugdll/6.jpg" alt=""></p>
+<p>and a window will pop up where I will put the parameters that <code>rundll32</code> take which are the name of the DLL to run and its paramenter similarly to when I executed in the shell, but with the only difference that I have to put the full path of the DLL.</p>
+<p><img src="/rundebugdll/7.jpg" alt=""></p>
+<p>Once set the parameters I have to set the debugger in order to stop at each load and unload of library in this way as soon as my DLL is loaded the process will stop without continuing to go on, at that point I can begin to analyze the DLL code.</p>
+<p><img src="/rundebugdll/8.jpg" alt=""></p>
+<p>At the <em>&ldquo;Debugger setup&rdquo;</em> windows I have to check <em>&ldquo;Suspend on library load/unload&rdquo;</em> in <em>&ldquo;Event&rdquo;</em> section and <em>&ldquo;Library load/unload&rdquo;</em> in <em>&ldquo;Logging&rdquo;</em> section.</p>
+<p><img src="/rundebugdll/9.jpg" alt=""></p>
+<p>By enabling logging on load/unload operation I can see what libraries are loading and unloading and when my DLL is being loaded.
+Now I start debugging pressing the play button.</p>
+<p>I can see the libraries start loding and each time a library is loaded it stops so I have to keep pressing play every time untill my library (<code>hello-world-x86.dll</code>) is loaded.</p>
+<p><img src="/rundebugdll/10.JPG" alt=""></p>
+<p>After quite a lot my DLL get loaded.</p>
+<p><img src="/rundebugdll/11.jpg" alt=""></p>
+<p>Now to see at what address the library is loaded I have to look to the <em>&ldquo;Modules List&rdquo;</em> window, if the windows is not there u can open it.</p>
+<p><img src="/rundebugdll/12.jpg" alt=""></p>
+<p>In my case the library has been loaded at <strong>73670000</strong>.</p>
+<p><img src="/rundebugdll/13.JPG" alt=""></p>
+<p>If ASLR is on at every run the DLL will be loaded in a different address so in order to match the address from the IDA window of static analysis (which starts at <strong>10001000</strong>) with the dinamyc analysis one</p>
+<p><img src="/rundebugdll/14.jpg" alt=""></p>
+<p>I have to rebase the IDA window in static analysis in order to let it start from <strong>73670000</strong> instead of <strong>10001000</strong>.</p>
+<p><img src="/rundebugdll/15.jpg" alt=""></p>
+<p><img src="/rundebugdll/16.jpg" alt=""></p>
+<p>The rebased program address are now changed.</p>
+<p><img src="/rundebugdll/18.jpg" alt=""></p>
+<p>At this point I am stoppped right after the dinamyc IDA window loaded my DLL, I select any line of code and press <em>&ldquo;G&rdquo;</em> to jump in a specific address. The address where I wanto to jump is the one I found after rebasing my DLL in stacic view of IDA which is <strong>73671000</strong> and I will jump in the desired portion of the code I want to debug.</p>
+<p><img src="/rundebugdll/17.JPG" alt=""></p>
+<p>In this way I can find by using the static view any portion of the code of the DLL, put a breakpoint, jumping there and debug by executing it step by step.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Jafor</small></a>
+        </div>
+    </div>
+
+</body>
+</html>
