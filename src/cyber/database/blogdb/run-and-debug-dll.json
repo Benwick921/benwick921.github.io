@@ -1,0 +1,94 @@
+{
+    "note":"title must match route name in App.js",
+    "title":"Run and Debug Dll",
+    "tags":["security", "reverse engineering", "windows"],
+    "date":"11/08/2024",
+    "path":"run-and-debug-dll",
+    "location": "./blog/",
+    "banner":"blog/rundebugdll/banner.webp",
+    "type":"blog",
+    "search":[
+        {
+            "section":"Run DLL",
+            "description":"Runnin a DLL with \"rundll32.exe\" from the command line"
+        },
+        {
+            "section":"Debug DLL",
+            "description":"Debugging the DLL by running it via \"rundll32.exe\" from a running IDA to find the DLL entry point (address of the load DLL function) and mapping the base address of a second non-running IDA to match the running IDA to analyze the code"
+        }
+    ],
+    "body":[
+        {
+            "id":"Run and Debug DLL",
+            "title":"<h1><span style=\"color:#da1953\">Run</span> and Debug Dll</h1><hr>",
+            "body":[
+                {
+                    "id":"banner",
+                    "title":"",
+                    "body":[
+                        "<img src=\"/cyber/blog/rundebugdll/banner.webp\" alt=\"\">"
+                    ]
+                },
+                {
+                    "id":"Introduction",
+                    "title":"<hr><h2><span style=\"color:#da1953\">Int</span>roduction </h2>",
+                    "body":[
+                        "<p>A DLL is a library that contains functions/code and datato to be used by more than one program at the same time, unlike normal programs it does not contain a <strong>main</strong> function therefore it does not have an entry point for execution.</p>",
+                        "<p>However, there are various reasons to execute a DLL, for example to solve a CTF, to analyze a DLL dropped by malware or to understand how it works.</p>"
+                    ]
+                },
+                {
+                    "id":"Runand DLL",
+                    "title":"<h2> <span style=\"color:#da1953\">Run</span> DLL </h2>",
+                    "body":[
+                        "<p>To run any DLL I have to use <em>rundll</em> program in my case I am using <code>rundll32</code> because the DLL is x86. So in order to run a DLL I have to execute the command <code>rundll32 hellow-world-x86.dll,#2</code> where <strong>#2</strong> is the number of exports.</p>",
+                        "<p>After the execution, a popup with the message <em>Hello world</em> will appear.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/1.jpg\" alt=\"\"></p>"
+                    ]
+                },
+                {
+                    "id":"Debug DLL",
+                    "title":"<p><h2 id=DBGDLL> <span style=\"color:#da1953\">Deb</span>ug DLL </h2></p>",
+                    "body":[
+                        "<p>In order to dynamically debug the DLL I am going to use <strong>IDA Free</strong> and as I see trying to run it as usual does not work at all.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/3.JPG\" alt=\"\"></p>",
+                        "<p>Now to run and debug the DLL properly I open two IDA windows, one with the DLL in static analysis and another in dynamic analysis running the DLL via <code>rundll32</code> program in IDA.</p>",
+                        "<p>Now I open another IDA window and open rundll32 which is in the path C:\\Windows\\SysWOW64\\rundll32.exe to dynamically analyse my DLL and leave the other IDA window in static analysis in the background (for now).</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/4.JPG\" alt=\"\"></p>",
+                        "<p>If this error message appears press <em>&ldquo;Yes&rdquo;</em>, it means I have to choose a different path to save the IDA databases for future analysis and I usually choose my Desktop.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/5.JPG\" alt=\"\"></p>",
+                        "<p>At this point, I have to tell the <code>rundll32</code> loaded in IDA to execute my <code>hello-world-x86.dll</code>.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/6.jpg\" alt=\"\"></p>",
+                        "<p>and a window will pop up where I can insert the parameters that <code>rundll32</code> take which are the name of the DLL to run and its parameters similar to when I executed in the shell, but with the only difference that I have to put the full path of the DLL.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/7.jpg\" alt=\"\"></p>",
+                        "<p>Once set the parameters I have to set the debugger in order to stop at each load and unload of library in this way as soon as my DLL is loaded the process will stop without continuing to go on, at that point I can begin to analyze the DLL's code.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/8.jpg\" alt=\"\"></p>",
+                        "<p>At the <em>&ldquo;Debugger setup&rdquo;</em> windows I have to check <em>&ldquo;Suspend on library load/unload&rdquo;</em> in the <em>&ldquo;Event&rdquo;</em> section, and <em>&ldquo;Library load/unload&rdquo;</em> in <em>&ldquo;Logging&rdquo;</em> section.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/9.jpg\" alt=\"\"></p>",
+                        "<p>By enabling logging on load/unload operation I can see what libraries are loading and unloading and when my DLL is being loaded. Now I start debugging by pressing the play button.</p>",
+                        "<p>I can see the libraries start loading and each time a library is loaded it stops so I have to keep pressing play every time until my library (<code>hello-world-x86.dll</code>) is loaded.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/10.JPG\" alt=\"\"></p>",
+                        "<p>After quite a lot my DLL get loaded.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/11.jpg\" alt=\"\"></p>",
+                        "<p>Now to see at what address the library is loaded I have to look at the <em>&ldquo;Modules List&rdquo;</em> window, if the Windows is not there I can open it.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/12.jpg\" alt=\"\"></p>",
+                        "<p>In my case, the library has been loaded at <strong>73670000</strong>.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/13.JPG\" alt=\"\"></p>",
+                        "<p>If ASLR is on at every run the DLL will be loaded in a different address so in order to match the address from the IDA window of static analysis (which starts at <strong>10001000</strong>) with the dynamic analysis one</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/14.jpg\" alt=\"\"></p>",
+                        "<p>I have to rebase the IDA window in static analysis in order to let it start from <strong>73670000</strong> instead of <strong>10001000</strong>.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/15.jpg\" alt=\"\"></p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/16.jpg\" alt=\"\"></p>",
+                        "<p>The rebased program address has now changed.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/18.jpg\" alt=\"\"></p>",
+                        "<p>At this point I am stopped right after the dynamic IDA window loaded my DLL, I select any line of code and press <em>&ldquo;G&rdquo;</em> to jump in a specific address. The address where I wan to to jump is the one I found after rebasing my DLL in the stacic view of IDA which is <strong>73671000</strong> and I will jump in the desired portion of the code I want to debug.</p>",
+                        "<p><img src=\"/cyber/blog/rundebugdll/17.JPG\" alt=\"\"></p>",
+                        "<p>In this way I can find by using the static view any portion of the code of the DLL, put a breakpoint, jump there and debug by executing it step by step.</p>",  
+                        ""
+                    ]
+                }
+
+            ]
+        }
+    ]
+}

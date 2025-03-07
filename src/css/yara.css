@@ -1,0 +1,50 @@
+.Post pre.yara {
+  background-color: var(--sidebar-left-background-color);
+    padding-left: 5px;
+    border-left: 1px solid var(--post-image-border-color);
+    font-family: monospace; /* Set font for the entire code block */
+    line-height: 1.1; /* Optional: line height to improve readability */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    overflow-wrap: break-word; /* Ensure long words break to the next line */
+}
+
+.Post pre.yara span{
+  font-family: monospace;
+}
+
+.Post pre.yara span.rulename {
+    font-family: monospace;
+ }
+  
+  .yara .section {
+    font-family: monospace;
+  }
+  
+  .yara .key {
+    color: #61afef; /* Blue */
+    font-family: monospace;
+  }
+  
+  .yara .string {
+    color: #98c379; /* Green */
+    font-family: monospace;
+  }
+  
+  .yara .comment {
+    color: #5c6370; /* Gray */
+    font-family: monospace;
+    font-style: italic;
+  }
+  
+  .yara .hex {
+    color: #e06c75; /* Red */
+    font-family: monospace;
+  }
+  
+  .yara .condition {
+    color: #c678dd; /* Purple */
+    font-family: monospace;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,42 @@
+pre.sql-code {
+    font-family: monospace;
+    background-color: var(--sidebar-left-background-color);
+    
+    overflow-x: auto;
+    padding-left: 5px;
+    border-left: 1px solid var(--post-image-border-color);
+    line-height: 1.1; /* Optional: line height to improve readability */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    overflow-wrap: break-word; /* Ensure long words break to the next line */
+}
+
+.keyword {
+    font-family: monospace;
+    color: #007acc; /* Blue for SQL keywords */
+}
+
+.function {
+    font-family: monospace;
+    color: #d04e00; /* Orange for functions */
+}
+
+.string {
+    font-family: monospace;
+    color: #008000; /* Green for strings */
+}
+
+.number {
+    font-family: monospace;
+    color: #b80000; /* Dark red for numbers */
+}
+
+.comment {
+    font-family: monospace;
+    color: #7d7d7d; /* Light grey for comments */
+}
+
+.output {
+    font-family: monospace;
+    color: #006400; /* Dark green for output */
+}

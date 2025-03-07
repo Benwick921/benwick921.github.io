@@ -1,0 +1,73 @@
+/* General styling for the terminal */
+.terminal {
+    font-family: monospace;
+    background-color: var(--sidebar-left-background-color);
+    overflow-x: auto;
+    padding-left: 5px;
+    border-left: 1px solid var(--post-image-border-color);
+    line-height: 1.1; /* Optional: line height to improve readability */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    overflow-wrap: break-word; /* Ensure long words break to the next line */
+}
+
+/* Command prompt color */
+.terminal .prompt {
+    font-family: monospace;
+    color: #4e9a06; /* Green for the prompt */
+}
+
+/* Commands */
+.terminal .command {
+    font-family: monospace;
+    color: #555753; /* Dark gray for commands and outputs */
+}
+
+/* Strings */
+.terminal .string {
+    font-family: monospace;
+    color: #ce5c00; /* Orange for strings */
+}
+
+/* Functions */
+.terminal .function {
+    font-family: monospace;
+    color: #204a87; /* Blue for functions */
+}
+
+/* Keywords */
+.terminal .keyword {
+    font-family: monospace;
+    color: #8f5902; /* Dark orange for keywords */
+    font-weight: bold;
+}
+
+/* File paths */
+.terminal .filepath {
+    font-family: monospace;
+    color: #73d216; /* Green for file paths */
+}
+
+/* Comments */
+.terminal .comment {
+    font-family: monospace;
+    color: #c4c4c4; /* Light gray for comments */
+    font-style: italic;
+}
+
+/* Special characters */
+.terminal .special-char {
+    font-family: monospace;
+    color: #f57900; /* Orange for special chars like $ */
+}
+
+/* Red for errors or unsuccessful commands */
+.terminal .error {
+    font-family: monospace;
+    color: #ef2929; /* Red for errors */
+}
+/* Path and command prompt */
+.terminal .path {
+    font-family: monospace;
+    color: #204a87; /* Blue */
+}

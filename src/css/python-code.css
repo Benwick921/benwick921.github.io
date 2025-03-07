@@ -1,0 +1,38 @@
+/* Python-specific syntax highlighting */
+.Post pre.python-code {
+  background-color: var(--sidebar-left-background-color);
+    padding-left: 5px;
+    border-left: 1px solid var(--post-image-border-color);
+    font-family: monospace; /* Set font for the entire code block */
+    line-height: 1.1; /* Optional: line height to improve readability */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    overflow-wrap: break-word; /* Ensure long words break to the next line */
+  }
+  .Post pre.python-code span{
+    font-family: monospace;
+  }
+  .Post pre.python-code::before,
+  .Post pre.python-code::after {
+    content: "";
+  }
+  
+  /* Specific keyword styles */
+  .Post pre.python-code span.keyword {
+    color: #0077cc; /* Blue for keywords like def, return, etc. */
+    font-weight: normal;
+  }
+  
+  .Post pre.python-code span.function {
+    
+    color: #d14; /* Red for strings */
+  }
+  
+  .Post pre.python-code span.string {
+    color: #009900; /* Green for function names */  
+  }
+  
+  .Post pre.python-code span.return {
+    color: #cc5500; /* Orange for return statements */
+    font-weight: normal;
+  }

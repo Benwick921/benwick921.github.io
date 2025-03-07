@@ -1,0 +1,46 @@
+/* Base styling */
+.code-vb {
+    background-color: #f9f9f9;
+    color: #000000;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    white-space: pre-wrap;
+  }
+  
+  /* Keywords (e.g., Dim, Sub, Function) */
+  .code-vb .keyword {
+    color: #0000FF; /* Blue */
+    font-weight: bold;
+  }
+  
+  /* Strings */
+  .code-vb .string {
+    color: #A31515; /* Dark Red */
+  }
+  
+  /* Comments */
+  .code-vb .comment {
+    color: #008000; /* Green */
+    font-style: italic;
+  }
+  
+  /* Numbers */
+  .code-vb .number {
+    color: #FF0000; /* Red */
+  }
+  
+  /* Functions (built-in) */
+  .code-vb .function {
+    color: #000088; /* Dark Blue */
+    font-weight: bold;
+  }
+  
+  /* Data types (e.g., Integer, String) */
+  .code-vb .datatype {
+    color: #800080; /* Purple */
+  }
+  

@@ -1,0 +1,71 @@
+/* HTTP Request Styling */
+.http-request {
+    font-family: monospace;
+    color: var(--text-color);
+    background-color: var(--sidebar-left-background-color);
+    overflow-x: auto;
+    padding-left: 5px;
+    border-left: 1px solid var(--post-image-border-color);
+    line-height: 1.1; /* Optional: line height to improve readability */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    overflow-wrap: break-word; /* Ensure long words break to the next line */
+}
+
+/* HTTP Methods (POST, GET, etc.) */
+.http-request .method {
+    color: #ff9800; /* Orange */
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* URL Path */
+.http-request .path {
+    color: var(--text-color); /* White */
+    font-family: monospace;
+}
+
+/* HTTP Version */
+.http-request .version {
+    color: var(--text-color); /* Light Blue */
+    font-family: monospace;
+}
+
+/* Headers */
+.http-request .header-key {
+    color: #0000aa; /* Blue */
+    font-weight: normal;
+    font-family: monospace;
+}
+
+.http-request .header-value {
+    color: var(--text-color); /* Light Gray */
+    font-family: monospace;
+}
+
+/* Request Body Styling */
+.http-request .body {
+    color: var(--text-color); /* Default white */
+    font-family: monospace;
+}
+
+/* POST Request Variables (Keys) */
+.http-request .post-key {
+    color: #0956bb; /* Light Blue */
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* POST Request Parameters (Values) */
+.http-request .post-value {
+    color: #ff5555; /* Red */
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* Equal Sign */
+.http-request .equals {
+    color: var(--text-color); /* Black */
+    font-weight: bold;
+    font-family: monospace;
+}
